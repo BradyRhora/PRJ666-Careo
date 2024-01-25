@@ -1,0 +1,44 @@
+:root {
+    --main-bg: #FEC1C1;
+    --header-bg: #EE7C7C;
+    --font-color: #000000;
+    --primary-color: #EB6D8B;
+}
+
+body {
+    background-color: var(--main-bg) !important;
+    color: var(--font-color) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--font-color) !important;
+}
+
+.header-text{
+    text-align: center;
+    margin-top:50px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.spaced-apart {
+    display: flex;
+    justify-content: space-between;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}
+
+#login-form {
+    width: 85%;
+}
+
+button {
+    width: 45%;
+    height: 50px;
+}

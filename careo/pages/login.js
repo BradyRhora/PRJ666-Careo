@@ -12,16 +12,12 @@ export default function Login(){
 
     return (
         <div>
-            <div>
-                <Card bg="light">
-                    <Card.Body>
-                        <h2>Welcome to Careo</h2>
-                        Please log in to continue
-                    </Card.Body>
-                </Card>
+            <div className="header-text">
+                <h1>Welcome to Careo</h1>
+                <h4>Please log in to continue</h4>
             </div>
-            <div className={styles.centerContainer}>
-                <Form>
+            <div className='centered' style={{paddingTop: '50px'}}>
+                <Form id="login-form">
                     <Form.Group>
                         <Form.Label>Username:</Form.Label>
                         <Form.Control type="text" value={user} id="userName" name="userName" onChange={(e)=>setUser(e.target.value)} placeholder="john.smith@gmail.com"/>
@@ -33,9 +29,15 @@ export default function Login(){
                     </Form.Group>
                     {warning && <><br/><Alert variant='danger'>{warning}</Alert></>}
                     <br />
-                    <Button variant="primary" className="pull-right" type="submit">Login</Button>
-                    &emsp; {/* This adds a space between the button and link*/}
-                    <a href="pages/forgot-password">Forgot password?</a>
+                    <div className="spaced-apart">
+                        <Form.Check style={{width:'auto'}} type="checkbox" label="Remember Me" />
+                        <a href="pages/forgot-password">Forgot password?</a>
+                    </div>
+                    <br />
+                    <div className="spaced-apart">
+                        <Button variant="primary" className="pull-right" type="submit">Login</Button>
+                        <Button variant="secondary" className="pull-right" type="submit">Sign Up</Button>
+                    </div>
                 </Form>
             </div>
         </div>

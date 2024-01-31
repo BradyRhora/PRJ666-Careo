@@ -18,7 +18,7 @@ export default function SignUp(){
     }
 
     const termsLabel = (
-        <span> I agree to the 
+        <span> I agree to the &nbsp;
             <a href="/terms-and-conditions"
                 target="_blank"
                 onClick={onTermsClick}

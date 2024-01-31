@@ -34,7 +34,7 @@ export default function Login(){
                         <a href="forgot">Forgot password?</a>
                     </div>
                     <br />
-                    <div className="spaced-apart">
+                    <div id="login-buttons" className="spaced-apart">
                         <Button variant="primary" className="pull-right" type="submit">Login</Button>
                         <Button variant="secondary" className="pull-right" type="submit">Sign Up</Button>
                     </div>

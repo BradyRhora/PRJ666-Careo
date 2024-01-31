@@ -34,11 +34,21 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
+#header {
+    background-color: var(--header-bg);
+}
+
+#landing-image {
+    max-width:500px;
+    width: 100%;
+    height: auto;
+}
+
 #login-form {
     width: 85%;
 }
 
-button {
+#login-buttons > button {
     width: 45%;
     height: 50px;
 }

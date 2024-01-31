@@ -32,7 +32,7 @@ export default function SignUp(){
             <div className="header-text">
                 <h1>Sign Up</h1>
             </div>
-            <div className='centered' style={{paddingTop: '50px'}}>
+            <div className='centered'>
                 <Form id="login-form">
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
@@ -56,7 +56,7 @@ export default function SignUp(){
                         <Form.Check style={{width:'auto'}} type="checkbox" label="Send me emails about product updates" />
                     </div>
                     <br />
-                    <div className={styles.center}>
+                    <div className="centered">
                         <Button variant="primary" type="submit">Create Account</Button>
                     </div>
                 </Form>

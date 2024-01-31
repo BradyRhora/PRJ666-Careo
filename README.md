@@ -1,4 +1,4 @@
-# This is Careo, your self-care superhero
+# This is Careo -  Your Self-Care Superhero
 
 This project is a web application developed using Next.js. It is designed to take in user skin and hair conditions and output the perfect routine for them.
 

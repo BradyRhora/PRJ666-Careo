@@ -31,7 +31,7 @@ export default function Login(){
                     <br />
                     <div className="spaced-apart">
                         <Form.Check style={{width:'auto'}} type="checkbox" label="Remember Me" />
-                        <a href="pages/forgot-password">Forgot password?</a>
+                        <a href="forgot">Forgot password?</a>
                     </div>
                     <br />
                     <div className="spaced-apart">

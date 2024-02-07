@@ -9,6 +9,7 @@ export default function SignUp(){
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    const [termsChecked, setTermsChecked] = useState(false);
     const [warning, setWarning] = useState("");
 
     //Opens tab to terms and conditions page. For now gives 404 error since there is no terms and conditions page yet.
@@ -27,16 +28,48 @@ export default function SignUp(){
         </span>
     );
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Check to see if fields are empty
+        if (!user.trim() || !password.trim() || !checkPassword.trim()) {
+            setWarning("Please fill out all fields.");
+            return;
+        }
+        
+
+        // Check if passwords match
+        if (password !== checkPassword) {
+            setWarning("Passwords do not match.");
+            return;
+        }
+            
+        // Password validation regular expression (There seems to be some issues with this, certain passwords are accepted, but others like this Mp@Seneca_1912 are not)
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!passwordRegex.test(password)){
+            setWarning("Password must contain at least 8 characters, 1 number, and 1 special character (#,$^,?,etc.)")
+            return;
+        }
+
+        // Check if user agreed to t and c
+        if (!termsChecked){
+            setWarning("Please agree to the Terms and Conditions") //This could also be an alert, if we want
+        }
+        
+        
+    }
+
     return (
         <div>
             <div className="header-text">
                 <h1>Sign Up</h1>
             </div>
             <div className='centered'>
-                <Form id="login-form">
+                <Form id="login-form" onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="text" value={user} id="email" name="email" onChange={(e)=>setUser(e.target.value)} placeholder="Enter valid email"/>
+                        <Form.Control type="email" value={user} id="email" name="email" onChange={(e)=>setUser(e.target.value)} placeholder="Enter valid email"/>
                     </Form.Group>
                     <br />
                     <Form.Group>
@@ -52,7 +85,7 @@ export default function SignUp(){
                     {warning && <><br/><Alert variant='danger'>{warning}</Alert></>}
                     <br />
                     <div>
-                        <Form.Check style={{width:'auto'}} type="checkbox" label={termsLabel} />
+                        <Form.Check style={{width:'auto'}} type="checkbox" label={termsLabel} checked={termsChecked} onChange={(e) => setTermsChecked(e.target.checked)}/>
                         <Form.Check style={{width:'auto'}} type="checkbox" label="Send me emails about product updates" />
                     </div>
                     <br />

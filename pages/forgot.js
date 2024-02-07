@@ -27,7 +27,7 @@ export default function Forgot() {
                 <Form id="login-form">
                     <Form.Group>
                         <Form.Label>Email:</Form.Label>
-                        <Form.Control type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}}id="email" name="email" placeholder="youremail@example.com"></Form.Control>
+                        <Form.Control type="email" value={email} onChange={(e)=>{setEmail(e.target.value)}}id="email" name="email" placeholder="youremail@example.com"></Form.Control>
                     </Form.Group>
                     <br/>
                     <div className="centered">

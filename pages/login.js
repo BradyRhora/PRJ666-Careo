@@ -2,6 +2,7 @@ import { Card, Form, Alert, Button } from "react-bootstrap"
 import styles from "@/styles/Home.module.css";
 import { Inter } from "next/font/google";
 import { useState } from 'react';
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,6 +10,21 @@ export default function Login(){
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [warning, setWarning] = useState("");
+    const router = useRouter();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if(!user.trim() || !password.trim()){
+            setWarning("Please fill out all fields.");
+        }
+    }
+
+    // Redirects user to the sign up page when called
+    const redirectToSignUp = (e) => {
+        e.preventDefault(); // Without this, the warning from handleSubmit will appear
+        router.push("/sign-up");
+    }
 
     return (
         <div>
@@ -17,10 +33,10 @@ export default function Login(){
                 <h4>Please log in to continue</h4>
             </div>
             <div className='centered' style={{paddingTop: '50px'}}>
-                <Form id="login-form">
+                <Form id="login-form" onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control type="text" value={user} id="userName" name="userName" onChange={(e)=>setUser(e.target.value)} placeholder="john.smith@gmail.com"/>
+                        <Form.Control type="email" value={user} id="userName" name="userName" onChange={(e)=>setUser(e.target.value)} placeholder="john.smith@gmail.com"/>
                     </Form.Group>
                     <br />
                     <Form.Group>
@@ -36,7 +52,8 @@ export default function Login(){
                     <br />
                     <div id="login-buttons" className="spaced-apart">
                         <Button variant="primary" className="pull-right" type="submit">Login</Button>
-                        <Button variant="secondary" className="pull-right" type="submit">Sign Up</Button>
+                        
+                        <Button variant="secondary" className="pull-right" type="submit" onClick={redirectToSignUp}>Sign Up</Button>
                     </div>
                 </Form>
             </div>

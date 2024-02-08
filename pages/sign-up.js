@@ -44,8 +44,8 @@ export default function SignUp(){
             return;
         }
             
-        // Password validation regular expression (There seems to be some issues with this, certain passwords are accepted, but others like this Mp@Seneca_1912 are not)
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        // Password validation regular expression
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*?_<>.,()[\]|]).{8,}$/;
 
         if (!passwordRegex.test(password)){
             setWarning("Password must contain at least 8 characters, 1 number, and 1 special character (#,$^,?,etc.)")

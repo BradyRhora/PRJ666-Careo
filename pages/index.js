@@ -16,8 +16,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <div style={{textAlign:"center"}} id="hero-text">
+      <main className={`${styles.main} ${inter.className} centered`}>
+        <div id="hero-text">
           <h1>Careo</h1>
           <h4>Your Self-Care Superhero</h4>
         </div>

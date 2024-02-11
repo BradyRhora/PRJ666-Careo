@@ -62,7 +62,7 @@ export default function SignUp(){
 
     return (
         <div>
-            <div className="header-text">
+            <div id="hero-text">
                 <h1>Sign Up</h1>
             </div>
             <div className='centered'>
@@ -75,7 +75,7 @@ export default function SignUp(){
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" value={password} id="password" name="password" onChange={(e)=>setPassword(e.target.value)} placeholder="Enter valid password" />
-                        <Form.Label style={{fontSize: '13px'}}>Password must contain at least 8 characters, 1 number, and 1 special character (#,$^,?,etc.)</Form.Label>
+                        <Form.Label style={{fontSize: '13px'}}>Password must have a length of at least 8 characters, with 1 number, and 1 special character (#,$^,?,etc.)</Form.Label>
                     </Form.Group>
                     <br />
                     <Form.Group>

@@ -19,7 +19,7 @@ export default function Forgot() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="header-text">
+            <div style={{textAlign:"center"}} id="hero-text">
                 <h1>Forgot Password</h1>
                 <h4>Please enter your email address</h4>
             </div>

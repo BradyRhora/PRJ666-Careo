@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import {atom, useAtom} from 'jotai';
-import {Container, Col, Row, Card, Button, FormSelect, FormCheck, Form} from "react-bootstrap";
+import {Container, Col, Row, Card, Button, FormControl, FormCheck, Form} from "react-bootstrap";
 import { Inter } from "next/font/google";
 import { conditionsAtom, profileAtom } from "@/store";
 
@@ -57,11 +57,6 @@ export default function CreateProfile(props) {
     );
   }
 
-  let ages = [];
-  for (let i = 18; i < 120; i++) {
-    ages.push(<option key={i} value={i}>{i}</option>)
-  }
-
   // // Renders the page whenever a condition is added or removed.
   // useEffect(() => {
   // },[listConditions]);
@@ -91,7 +86,7 @@ export default function CreateProfile(props) {
   }
 
   function setBudget(val) {
-    budget = isNan(val) ? parseInt(val) : budget;
+    budget = isNaN(val) ? budget : parseInt(val);
   }
 
   function formSubmit() {
@@ -120,8 +115,8 @@ export default function CreateProfile(props) {
         </div>
         <br/>
         <Container fluid style={{marginBottom:"5em"}}>
-          <Row style={{minHeight: "25em", maxHeight: "25em", marginLeft: "1%", marginRight: "1%"}}>
-            <Col className="mx-auto" style={{minHeight: "25em", maxHeight: "25em", maxWidth:"50em"}}>
+          <Row style={{minHeight: "25em", marginLeft: "1%", marginRight: "1%"}}>
+            <Col className="mx-auto condition-card">
               <Row>
                 <Card text="light" className="overflow-auto" style={{minHeight: "25em", maxHeight: "25em", background: "#FFFFFF", padding: "1em"}}> 
                   <Card.Title>All</Card.Title>
@@ -130,51 +125,48 @@ export default function CreateProfile(props) {
                 </Card>
               </Row>
             </Col>
-            <Col className="mx-auto" style={{minHeight: "25em", maxHeight: "25em", maxWidth:"50em"}}>
-              <Card text="light" className="overflow-auto" style={{minHeight: "25em", maxHeight: "25em", background: "#FFFFFF", padding: "1em"}}> 
-                <Card.Title>Selected</Card.Title>
-                <hr></hr>
-                {selected}
-              </Card>
+            <Col className="mx-auto condition-card">
+              <Row>
+                <Card text="light" className="overflow-auto" style={{minHeight: "25em", maxHeight: "25em", background: "#FFFFFF", padding: "1em"}}> 
+                  <Card.Title>Selected</Card.Title>
+                  <hr></hr>
+                  {selected}
+                </Card>
+              </Row>
             </Col>
           </Row>
           <br /><br />
-          <Row className="mx-auto" style={{maxWidth: "50em"}}>
-            <span style={{display: "flex", justifyContent: "center"}}>
-              <h5 style={{marginRight: "2em"}}>Your Age: </h5>
-              <FormSelect onChange={(e) => age = e.currentTarget.value}>
-                {ages}
-              </FormSelect>
-            </span>
-          </Row>
-          <br />
-          <Row className="mx-auto" style={{maxWidth: "50em"}}>
-            <span style={{display: "flex", justifyContent: "center"}}>
-              <FormCheck label="Only display vegan products" onChange={() => vegan = !vegan}>
-              </FormCheck>
-            </span>
-          </Row>
-          <br />
-          <Row className="mx-auto" style={{maxWidth: "50em"}}>
-            <span style={{display: "flex", justifyContent: "center"}}>
-              <FormCheck label="Only display cruelty-free products" onChange={() => crueltyFree = !crueltyFree}>
-              </FormCheck>
-            </span>
-          </Row>
-          <br />
-          <Row className="mx-auto" style={{maxWidth: "50em"}}>
-            <span style={{display: "flex", justifyContent: "center"}}>
-              <FormCheck label="Set max budget" onChange={() => budgetBool = !budgetBool}>
-              </FormCheck>
-              <Form.Control type="number" onChange={(e) => setBudget(e.currentTarget.value)}>
-
-              </Form.Control>
-            </span>
-          </Row>
-          <br /><br />
-          <Row className="mx-auto" style={{maxWidth: "25em"}}>
-            <Button onClick={formSubmit}>Create</Button>
-          </Row>
+          <div className="auto-margin profile-input-group">
+            <Row className="mx-auto profile-input-section">
+                <h5 style={{marginRight: "2em"}}>Your Age: </h5>
+                <FormControl type="number" min="18" max="120" defaultValue="18" onChange={(e) => age = e.currentTarget.value}>                
+                </FormControl>
+            </Row>
+            <br />
+            <Row className="mx-auto profile-input-section">
+                <FormCheck label="Only display vegan products" onChange={() => vegan = !vegan}>
+                </FormCheck>
+            </Row>
+            <br />
+            <Row className="mx-auto profile-input-section">
+                <FormCheck label="Only display cruelty-free products" onChange={() => crueltyFree = !crueltyFree}>
+                </FormCheck>
+            </Row>
+            <br />
+            <Row className="mx-auto profile-input-section">
+                <FormCheck label="Set max budget ($)" onChange={() => {
+                    budgetBool = !budgetBool
+                    document.getElementById("budget").disabled = !budgetBool;
+                  }}>
+                </FormCheck>
+                <Form.Control disabled={true} id="budget" type="number" onChange={(e) => setBudget(e.currentTarget.value)}>
+                </Form.Control>
+            </Row>
+            <br /><br />
+            <Row className="mx-auto" style={{maxWidth: "25em"}}>
+              <Button onClick={formSubmit}>Create</Button>
+            </Row>
+          </div>
         </Container>
       </main>
     </>

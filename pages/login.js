@@ -28,8 +28,8 @@ export default function Login(){
 
     return (
         <div>
-            <div className="header-text">
-                <h1>Welcome to Careo</h1>
+            <div style={{textAlign:"center"}} id="hero-text">
+                <h1>Welcome to Careo</h1><br/>
                 <h4>Please log in to continue</h4>
             </div>
             <div className='centered' style={{paddingTop: '50px'}}>

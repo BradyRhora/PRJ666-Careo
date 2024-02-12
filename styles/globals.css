@@ -14,11 +14,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--font-color) !important;
 }
 
-.header-text{
-    text-align: center;
-    margin-top:50px;
-}
-
 .btn-primary {
     background-color: var(--primary-color) !important;
     color: white !important;
@@ -34,8 +29,39 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
+.auto-margin {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.condition-card {
+    min-height: 25em;
+    max-height: 25em;
+    max-width: 50em;
+    padding-left:2em;
+    padding-right:2em;
+    margin-bottom:1em;
+}
+
+.input-section {
+    width: 50em;
+}
+
+.profile-input-group {
+    width:50%;
+}
+
+#hero-text{
+    text-align: center;
+    margin-top:50px;
+}
+
 #header {
     background-color: var(--header-bg);
+    position: fixed;
+    top:0px;
+    width: 100%;
+    z-index: 100;
 }
 
 #landing-image {
@@ -51,4 +77,14 @@ h1, h2, h3, h4, h5, h6 {
 #login-buttons > button {
     width: 45%;
     height: 50px;
+}
+
+@media (max-width: 768px) {
+    .profile-input-section {
+        width: 100%;
+    }
+
+    .profile-input-group {
+        width:100%;
+    }
 }

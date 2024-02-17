@@ -1,9 +1,10 @@
-import { Card, Form, Alert, Button } from "react-bootstrap"
-import styles from "@/styles/Home.module.css";
+import { Form, Alert, Button } from "react-bootstrap"
 import { Inter } from "next/font/google";
 import { useState } from 'react';
+import { registerUser } from "@/lib/authenticate";
+import { useRouter } from "next/router";
 
-const inter = Inter({ subsets: ["latin"] });
+// TODO: change 'user' terminology to 'email'; low priority
 
 export default function SignUp(){
     const [user, setUser] = useState("");
@@ -11,6 +12,8 @@ export default function SignUp(){
     const [checkPassword, setCheckPassword] = useState("");
     const [termsChecked, setTermsChecked] = useState(false);
     const [warning, setWarning] = useState("");
+
+    const router = useRouter();
 
     //Opens tab to terms and conditions page. For now gives 404 error since there is no terms and conditions page yet.
     function onTermsClick(event){
@@ -28,7 +31,7 @@ export default function SignUp(){
         </span>
     );
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Check to see if fields are empty
@@ -36,7 +39,7 @@ export default function SignUp(){
             setWarning("Please fill out all fields.");
             return;
         }
-        
+
 
         // Check if passwords match
         if (password !== checkPassword) {
@@ -56,8 +59,14 @@ export default function SignUp(){
         if (!termsChecked){
             setWarning("Please agree to the Terms and Conditions") //This could also be an alert, if we want
         }
-        
-        
+        try {
+            await registerUser(user, password);
+            // TODO: verify successful registration before pushing /login
+            router.push('/login');
+        } catch(e) {
+            console.log(e);
+            // TODO: Do something to notify the user of the error
+        }
     }
 
     return (

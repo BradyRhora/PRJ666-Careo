@@ -1,22 +1,44 @@
-import { Card, Form, Alert, Button } from "react-bootstrap"
-import styles from "@/styles/Home.module.css";
-import { Inter } from "next/font/google";
+import { Form, Alert, Button } from "react-bootstrap"
 import { useState } from 'react';
 import { useRouter } from "next/router";
+import { useAtom } from "jotai";
 
-const inter = Inter({ subsets: ["latin"] });
+import { userAtom } from "@/store";
+import { authenticateUser } from "@/lib/authenticate";
+import { getUserData } from "@/lib/userData";
 
 export default function Login(){
+    // Use this atom to see if user data is set, i.e. if the user is logged in for the purposes of dynamic views (hide login button etc.)
+    const [userData, setUserData] = useAtom(userAtom);
+
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [warning, setWarning] = useState("");
     const router = useRouter();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if(!user.trim() || !password.trim()){
             setWarning("Please fill out all fields.");
+        }
+
+        try {
+            // attempt user login
+            await authenticateUser(user, password);
+            // get user profile data
+            const data = await getUserData();
+            
+            //TODO: clean data to prevent hashed password leak; low priority
+
+            // set user profile data
+            setUserData(data);
+            console.log("User data set: " + JSON.stringify(data));
+            // redirect user to home page
+            router.push('/');
+        } catch(e) {
+            console.log(e);
+            //TODO: Notify the user in some way that user/pass was incorrect
         }
     }
 

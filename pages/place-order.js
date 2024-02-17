@@ -1,10 +1,15 @@
 import { Form, Row, Col, Button } from "react-bootstrap";
+import { useRouter } from "next/router";
 
-
-
-
+import { isAuthenticated } from "@/lib/authenticate";
 
 export default function PlaceOrder(){
+	const router = useRouter();
+
+	if (!isAuthenticated()) {
+		router.push('/login');
+	}
+
 	return(
 		<>
 		<div style={{textAlign:"center", paddingTop:"10px"}} id="hero-text">

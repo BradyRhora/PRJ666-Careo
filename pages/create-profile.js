@@ -1,16 +1,17 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import {atom, useAtom} from 'jotai';
+import { useAtom } from 'jotai';
 import {Container, Col, Row, Card, Button, FormControl, FormCheck, Form} from "react-bootstrap";
 import { Inter } from "next/font/google";
-import { conditionsAtom, profileAtom } from "@/store";
+import { conditionsAtom } from "@/store";
 
 const inter = Inter({ subsets: ["latin"] });
+
+//TODO: Add 
 
 // props.conditions must be an array of strings
 export default function CreateProfile(props) {
   const [conditions, setConditions] = useAtom(conditionsAtom);
-  const [profile, setProfile] = useAtom(profileAtom);
   const [listConditions, setListConditions] = useState([]);
   const [selectedConditions, setSelectedConditions] = useState([]);
   let age = 18;
@@ -56,15 +57,6 @@ export default function CreateProfile(props) {
 
     );
   }
-
-  // // Renders the page whenever a condition is added or removed.
-  // useEffect(() => {
-  // },[listConditions]);
-
-  // Check for population of conditions
-  // if (!props.conditions) {
-  //   return (<p>Error loading conditions, please try refreshing the app.<br/> We are sorry for the inconvenience.</p>);
-  // }
 
   // Add new condition to the list of selected conditions
   function addCondition(conditionIndex) {

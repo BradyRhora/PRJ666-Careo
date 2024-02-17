@@ -38,6 +38,7 @@ export async function middleware(req) {
   }
 }
 
+// If more client-side routes are added, add them here.
 export const config = {
   matcher: ['/', '/login', '/sign-up', '/place-order', '/forgot', '/terms-and-conditions', '/create-profile']
 }

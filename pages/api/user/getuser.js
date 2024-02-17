@@ -4,8 +4,8 @@ import { findUserById } from '@/lib/models/user';
 
 const handler = createRouter();
 
+// Gets the full user profile and account data
 handler.get(async (req, res) => {
-  //console.log(req);
   try {
     // Extract the user data from the cookie
     const {cookies} = req;
@@ -17,7 +17,6 @@ handler.get(async (req, res) => {
     } else {
       throw new Error('No token found');
     }
-    
   } catch(e) {
     console.log(e);
     res.status(400).json({status: 400, message: "JSON decode error, or no cookie found"});

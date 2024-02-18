@@ -35,7 +35,7 @@ export default function Login(){
             setUserData(data);
             console.log("User data set: " + JSON.stringify(data));
             // redirect user to home page
-            router.push('/');
+            router.push('/create-profile');
         } catch(e) {
             console.log(e);
             //TODO: Notify the user in some way that user/pass was incorrect

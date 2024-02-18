@@ -62,6 +62,7 @@ export default function SignUp(){
         try {
             await registerUser(user, password);
             // TODO: verify successful registration before pushing /login
+            alert("Please check your email for a verification message.");
             router.push('/login');
         } catch(e) {
             console.log(e);

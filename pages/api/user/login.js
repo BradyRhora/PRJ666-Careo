@@ -35,7 +35,6 @@ handler.post(async (req, res) => {
     const token = await new SignJWT({payload}).setProtectedHeader({alg: "HS256"}).setIssuedAt().setExpirationTime("30m").sign(await getJwtSecretKey());
     
     // set the cookie
-    //res.setHeader('Set-Cookie', `token=${token}; samesite=strict; httpOnly=true; maxAge=60*60*24`);
     res.setHeader('Set-Cookie', `token=${token}; samesite=strict; httpOnly=true; Max-Age=${60*60*24}; Path=/`);
     res.status(200).json({success: true, status: 200});
 

@@ -13,6 +13,7 @@ export default function SignUp(){
     const router = useRouter();
     const userData = useAtomValue(userAtom);
 
+    // TODO: Move this functionality to middleware
     if (userData && userData.email) { // If user is already logged in, redirect to home page
         router.push("/");
      }

@@ -29,6 +29,7 @@ handler.post(async (req, res) => {
     // Update was successful
     if(isUpdated) {
         console.log("User's email was verified")
+        res.status(200).json({success: true, status: 200, message: "Email validated."});
         res.end();
     }
     else{

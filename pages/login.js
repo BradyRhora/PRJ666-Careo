@@ -1,5 +1,6 @@
 import { Form, Alert, Button } from "react-bootstrap"
 import { useState } from 'react';
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 
@@ -10,11 +11,18 @@ import { getUserData } from "@/lib/userData";
 export default function Login(){
     // Use this atom to see if user data is set, i.e. if the user is logged in for the purposes of dynamic views (hide login button etc.)
     const [userData, setUserData] = useAtom(userAtom);
+    const router = useRouter();
+
+    // TODO: Move this functionality to middleware
+    useEffect(() => { // Only run this effect once, when the component mounts
+        if (userData && userData.email) { // If user is already logged in, redirect to home page
+        router.push("/");
+        }}
+    , []); // Empty dependency array so this effect will only run once
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [warning, setWarning] = useState("");
-    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,9 +41,9 @@ export default function Login(){
 
             // set user profile data
             setUserData(data);
-            console.log("User data set: " + JSON.stringify(data));
+
             // redirect user to home page
-            router.push('/');
+            router.push('/create-profile');
         } catch(e) {
             console.log(e);
             //TODO: Notify the user in some way that user/pass was incorrect

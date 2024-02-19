@@ -1,6 +1,6 @@
 import {createRouter, expressWrapper} from 'next-connect';
 import { registerUser } from '@/lib/models/user';
-import { sendVerificationEmail } from '@/lib/email';
+import { sendVerificationEmail, generateVerificationToken } from '@/lib/email';
 
 import connectDB from '@/lib/middleware/mongodb';
 
@@ -20,9 +20,14 @@ handler.post(async (req, res) => {
   }
 
   try {
-    await registerUser({email, password});
-    //TODO: Generate token here and pass it in
-    await sendVerificationEmail(email, 1)
+    // Generating verification token
+    const verificationToken = generateVerificationToken();
+    console.log("Generated token is: ", verificationToken);
+
+    await registerUser({email, password, verificationToken});
+
+    // Call function to send email to user
+    await sendVerificationEmail(email, verificationToken);
   }
   catch(err) {
     res.status(400).json({status: 400, message: "User already exists."});

@@ -1,5 +1,6 @@
 import { Form, Alert, Button } from "react-bootstrap"
 import { useState } from 'react';
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 
@@ -10,11 +11,17 @@ import { getUserData } from "@/lib/userData";
 export default function Login(){
     // Use this atom to see if user data is set, i.e. if the user is logged in for the purposes of dynamic views (hide login button etc.)
     const [userData, setUserData] = useAtom(userAtom);
+    const router = useRouter();
+
+    useEffect(() => { // Only run this effect once, when the component mounts
+        if (userData && userData.email) { // If user is already logged in, redirect to home page
+        router.push("/");
+        }}
+    , []); // Empty dependency array so this effect will only run once
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [warning, setWarning] = useState("");
-    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

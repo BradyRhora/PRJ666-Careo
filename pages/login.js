@@ -33,7 +33,7 @@ export default function Login(){
 
             // set user profile data
             setUserData(data);
-            console.log("User data set: " + JSON.stringify(data));
+
             // redirect user to home page
             router.push('/create-profile');
         } catch(e) {

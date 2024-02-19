@@ -5,9 +5,15 @@ import Button from "react-bootstrap/Button";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 
+import { userAtom } from "@/store";
+import { useAtomValue } from "jotai";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const userData = useAtomValue(userAtom);
+  let loggedIn = userData && userData.email ? true : false;
+
   return (
     <>
       <Head>
@@ -22,10 +28,12 @@ export default function Home() {
           <h4>Your Self-Care Superhero</h4>
         </div>
         <Image id="landing-image" width="900" height="900" src="/assets/landing.jpg" alt="Careo Skin Care Products" priority></Image>
+        {loggedIn ? null :<>
         <Link href="/sign-up">
           <Button>Register Now</Button>
         </Link>
         <div id="login-footer" style={{textAlign:"center"}}>Already have an account? <Link href="/login">Log In here.</Link></div>
+        </>}
       </main>
     </>
   );

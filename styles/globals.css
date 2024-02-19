@@ -3,6 +3,7 @@
     --header-bg: #EE7C7C;
     --font-color: #000000;
     --primary-color: #EB6D8B;
+    --hyperlink-color: #e91042;
 }
 
 body {
@@ -62,6 +63,16 @@ h1, h2, h3, h4, h5, h6 {
     top:0px;
     width: 100%;
     z-index: 100;
+    display: flex;
+    justify-content: space-between;
+}
+
+#header > span {
+    margin:5px;
+}
+
+#header a {
+    color: var(--hyperlink-color);
 }
 
 #landing-image {

@@ -4,16 +4,28 @@ import { useState } from 'react';
 import { registerUser } from "@/lib/authenticate";
 import { useRouter } from "next/router";
 
+import { useAtomValue } from "jotai";
+import { userAtom } from "@/store";
+
 // TODO: change 'user' terminology to 'email'; low priority
 
 export default function SignUp(){
+    const router = useRouter();
+    const userData = useAtomValue(userAtom);
+
+    // TODO: Move this functionality to middleware
+    if (userData && userData.email) { // If user is already logged in, redirect to home page
+        router.push("/");
+     }
+
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
     const [termsChecked, setTermsChecked] = useState(false);
     const [warning, setWarning] = useState("");
 
-    const router = useRouter();
+
+    
 
     //Opens tab to terms and conditions page. For now gives 404 error since there is no terms and conditions page yet.
     function onTermsClick(event){

@@ -5,7 +5,8 @@ import { userAtom } from '@/store';
 const UserProvider = ({ children }) => {
   const [user, setUser] = useAtom(userAtom);
 
-  useEffect(() => {    
+  useEffect(() => {  
+    if (user && user.email) return; // If user is already logged in, don't fetch user data
     fetch('/api/user/getuser') // fetch user data from api
         .then(response => response.json())
         .then(data => setUser(data)) // set userAtom

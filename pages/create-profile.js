@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { useAtom } from 'jotai';
 import {Container, Col, Row, Card, Button, FormControl, FormCheck, Form} from "react-bootstrap";
 import { Inter } from "next/font/google";
+
 import { conditionsAtom } from "@/store";
+import { userAtom } from "@/store";
+import { setProfileData } from "@/lib/userData";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +15,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 // props.conditions must be an array of strings
 export default function CreateProfile(props) {
+  const router = useRouter();
+
   const [conditions, setConditions] = useAtom(conditionsAtom);
+  const [user, setUser] = useAtom(userAtom);
+
   const [listConditions, setListConditions] = useState([]);
   const [selectedConditions, setSelectedConditions] = useState([]);
   let age = 18;
@@ -19,6 +27,13 @@ export default function CreateProfile(props) {
   let crueltyFree = false;
   let budget = 100;
   let budgetBool = false;
+
+  // TODO: Move this functionality to middleware
+  useEffect(() => { // Only run this effect once, when the component mounts
+    if (user && user.email) { // If user is already logged in, redirect to home page
+        router.push("/login");
+    }}
+, []); // Empty dependency array so this effect will only run once
 
   // Populate the list of conditions
   // setListConditions(props.conditions);
@@ -77,18 +92,32 @@ export default function CreateProfile(props) {
     setListConditions([con, ...listConditions]);
   }
 
+  // Budget boolean toggle
   function setBudget(val) {
     budget = isNaN(val) ? budget : parseInt(val);
   }
 
+  // Submit form to back-end, update local atom
   function formSubmit() {
+    // Set DB data
     let p = {};
     p.conditions = selectedConditions;
     p.age = age;
-    p.budget = budgetBool ? budget : -1;
+    p.budget = budget;
+    p.useBudget = budgetBool;
     p.vegan = vegan;
     p.crueltyFree = crueltyFree;
-    console.log(JSON.stringify(p));
+    setProfileData(p);
+
+    // Set atom data
+    let u = user;
+    u.conditions = p.conditions;
+    u.age = p.age;
+    u.budget = p.budget;
+    u.useBudget = p.useBudget;
+    u.vegan = p.vegan;
+    u.crueltyFree = p.crueltyFree;
+    setUser(u);
   }
 
   return (

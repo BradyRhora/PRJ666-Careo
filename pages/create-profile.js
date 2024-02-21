@@ -28,13 +28,6 @@ export default function CreateProfile(props) {
   let budget = 100;
   let budgetBool = false;
 
-  // TODO: Move this functionality to middleware
-  useEffect(() => { // Only run this effect once, when the component mounts
-    if (user && user.email) { // If user is already logged in, redirect to home page
-        router.push("/login");
-    }}
-, []); // Empty dependency array so this effect will only run once
-
   // Populate the list of conditions
   // setListConditions(props.conditions);
   useEffect(() => {

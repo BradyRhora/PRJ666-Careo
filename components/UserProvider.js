@@ -16,7 +16,7 @@ const UserProvider = ({ children }) => {
             }
         }
         );
-  }, []);
+  }, []); // eslint-disable-line
 
   return children;
 };

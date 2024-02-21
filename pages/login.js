@@ -18,7 +18,7 @@ export default function Login(){
         if (userData && userData.email) { // If user is already logged in, redirect to home page
             router.push("/");
         }}
-    , []); // Empty dependency array so this effect will only run once
+    , [userData, router]);
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");

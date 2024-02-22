@@ -3,13 +3,30 @@ import { Inter } from "next/font/google";
 import Head from "next/head";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useState } from 'react';
+import { findUserByEmail } from "@/lib/authenticate";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Forgot() {
     const [email, setEmail] = useState("");
-    function submitEmail(){
-        console.log('Email submitted');
+    
+    const submitEmail = async(e) => {
+        e.preventDefault();
+        
+        if (!email.trim()){
+            alert("Please fill in the email field.");
+            return;
+        }
+        else{
+            try{
+                await findUserByEmail(email);
+                alert("Please check your email for a password rest link.")
+
+            } catch(e){
+                console.log(e);
+                alert("A user with that email was not found.");
+            }
+        }
     }
     return(
         <>

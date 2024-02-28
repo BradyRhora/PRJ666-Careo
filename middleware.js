@@ -3,7 +3,7 @@ import {NextResponse} from 'next/server';
 import { verifyJwtToken } from '@/lib/authenticate';
 
 // List of safe routes
-const AUTH_PAGES = ['/login', '/', '/sign-up', '/forgot'];
+const AUTH_PAGES = ['/login', '/', '/sign-up', '/forgot', '/terms-and-conditions'];
 
 const isAuthPages = (url) => AUTH_PAGES.some((page) => page.startsWith(url));
 

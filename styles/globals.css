@@ -90,6 +90,16 @@ h1, h2, h3, h4, h5, h6 {
     height: 50px;
 }
 
+#password-rest-form {
+    width: 85%;
+}
+
+#password-reset-button > button {
+    margin-top: 20px;
+    width: 45%;
+    height: 50px;
+}
+
 #tab-nav {
     background-color: #EE7C7C;
 }

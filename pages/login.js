@@ -16,7 +16,7 @@ export default function Login(){
     // TODO: Move this functionality to middleware
     useEffect(() => { // Only run this effect once, when the component mounts
         if (userData && userData.email) { // If user is already logged in, redirect to home page
-            router.push("/");
+            router.push("/create-profile");
         }}
     , [userData, router]);
 

@@ -10,7 +10,7 @@ export default function Header() {
     return (
         <div id="header">
             <Link href="/"><Image width="32" height="32" src="/assets/careo-temp-logo.png" alt="Careo Logo"></Image></Link>
-            {userData && userData.email ? <span>Welcome, {userData.email} <Link style={{fontSize: '0.8em'}} href="/api/logout">Logout</Link></span> : null}
+            {userData && userData.email ? <span>Welcome, <b>{userData.email.split('@')[0]}</b> <Link style={{fontSize: '0.8em'}} href="/api/logout">Logout</Link></span> : null}
         </div>
     )
 }

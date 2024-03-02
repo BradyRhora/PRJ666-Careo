@@ -20,7 +20,7 @@ export default function Forgot() {
         else{
             try{
                 await findUserByEmail(email);
-                alert("Please check your email for a password rest link.")
+                alert("Please check your email for a password reset link.")
 
             } catch(e){
                 console.log(e);

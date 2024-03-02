@@ -111,6 +111,9 @@ export default function CreateProfile(props) {
     u.vegan = p.vegan;
     u.crueltyFree = p.crueltyFree;
     setUser(u);
+
+    router.push('/user-profile');
+
   }
 
   return (

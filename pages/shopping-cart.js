@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import {Col, Row } from "react-bootstrap"; 
 import ProductCard from "@/components/ProductCard";
 import { cartItemsAtom, userAtom } from "@/store";
+import TabNavigation from "@/components/TabNavigation";
 //import { isAuthenticated } from "@/lib/authenticate";
 
 //Going to use atoms to keep track of products selected for purchase, for now just hardcoding some products for testing
@@ -31,6 +32,7 @@ export default function ShoppingCart(){
         <>
             <div style={{textAlign:"center"}} id="hero-text">
                 <h1>Your Cart</h1><br/>
+                <TabNavigation/>
             </div>
             <div>
                 <div className='centered' style={{paddingTop: '50px', paddingLeft: '30px'}}>

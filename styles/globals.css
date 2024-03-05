@@ -3,9 +3,11 @@
     --header-bg: #EE7C7C;
     --font-color: #000000;
     --primary-color: #EB6D8B;
+    --secondary-color: #f0d7dd;
     --hyperlink-color: #e91042;
     --highlight-color: #eb889f;
     --select-color: #be5776;
+
 }
 
 body {
@@ -22,6 +24,11 @@ h1, h2, h3, h4, h5, h6 {
     color: white !important;
 }
 
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    color: black !important;
+}
+
 .spaced-apart {
     display: flex;
     justify-content: space-between;
@@ -36,6 +43,17 @@ h1, h2, h3, h4, h5, h6 {
 .auto-margin {
     margin-left:auto;
     margin-right:auto;
+}
+
+.button-menu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.button-menu > button {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .condition-card {
@@ -75,6 +93,19 @@ h1, h2, h3, h4, h5, h6 {
 
 .rec-selected:hover {
     background-color: var(--select-color) !important;
+}
+
+#rec-selected-box {
+    border: solid black 2px;
+    width: 400px;
+    background-color: var(--header-bg);
+    padding: 10px;
+    overflow: hidden;
+    flex-wrap:nowrap;
+}
+
+#rec-selected-box img {
+    box-sizing: content-box;
 }
 
 #rec-table {
@@ -190,5 +221,9 @@ h1, h2, h3, h4, h5, h6 {
     #recommendation-box {
         width: 95%;
         max-height:200px;
+    }
+
+    #rec-selected-box {
+        width: 90%;
     }
 }

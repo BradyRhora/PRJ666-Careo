@@ -7,6 +7,8 @@ import { useAtom } from "jotai";
 import { userAtom } from "@/store";
 import { useRouter } from "next/router";
 
+import TabNavigation from "@/components/TabNavigation";
+
 
 export default function Header() {
     const [userData, setUserData] = useAtom(userAtom);
@@ -20,9 +22,13 @@ export default function Header() {
     }
         
     return (
-        <div id="header">
-            <Link href="/"><Image width="32" height="32" src="/assets/careo-temp-logo.png" alt="Careo Logo"></Image></Link>
-            {userData && userData.email ? <span>Welcome, <b>{userData.email.split('@')[0]}</b> <a href='' style={{fontSize: '0.8em'}} onClick={handleLogout}>Logout</a></span> : null}
-        </div>
+        <>
+            <div style={{height:"50px"}}className="spacer"></div>
+            <div id="header">
+                <Link href="/"><Image width="32" height="32" src="/assets/careo-temp-logo.png" alt="Careo Logo"></Image></Link>
+                {userData && userData.email ? <span>Welcome, <b>{userData.email.split('@')[0]}</b> <a href='' style={{fontSize: '0.8em'}} onClick={handleLogout}>Logout</a></span> : null}
+            </div>
+            {userData && userData.email ? <TabNavigation/> : null}
+        </>
     )
 }

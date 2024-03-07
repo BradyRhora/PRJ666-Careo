@@ -43,7 +43,7 @@ export default function Recommendation(){
         fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
             setRecs(data);
         })
-        
+
         if (recs[0])
             setSelectedProduct(recs[0]);
     }, []);
@@ -68,7 +68,7 @@ export default function Recommendation(){
                     <p>Product recommendations are based on Care Profile conditions</p>                    
                     
                     <div id="recommendation-box">
-                        { recs.length && 
+                        { recs.length > 0 ? 
                         <table id="rec-table">
                             <tbody>
                                 {recs.map((rec, i) => (
@@ -77,7 +77,8 @@ export default function Recommendation(){
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>}
+                        </table> :
+                        <p>Loading...</p>}
                     </div>
                     <br/>
                     <div className="button-menu">
@@ -87,7 +88,7 @@ export default function Recommendation(){
                     <br/>
 
                     <div id="rec-selected-box">
-                        {selectedProduct && <>
+                        {selectedProduct.length > 0 ? <>
                             <Row>
                                 <Col>
                                     <Row>
@@ -101,7 +102,9 @@ export default function Recommendation(){
                                     </Row>
                                 </Col>
                             </Row>
-                        </>}
+                        </>
+                        :
+                        <p>No product selected</p>}
                     </div>
                     <br/>
                     

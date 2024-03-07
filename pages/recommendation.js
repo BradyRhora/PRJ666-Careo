@@ -8,7 +8,7 @@ import { Col, Row } from "react-bootstrap";
 export default function Recommendation(){
     const router = useRouter();
     
-    const [recs, setRecs] = useState([]);
+    const [recs, setRecs] = useState();
     const [selectedProduct, setSelectedProduct] = useState({});
 
     
@@ -40,13 +40,15 @@ export default function Recommendation(){
     
 
     useEffect(() => {
-        fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
-            setRecs(data);
-        })
+        if (!recs) {
+            fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
+                setRecs(data);
+            });
+        }
 
-        if (recs[0])
+        if (recs && recs[0])
             setSelectedProduct(recs[0]);
-    }, []);
+    }, [recs]);
 
     function selectRec(e){
         let rows = document.querySelectorAll("#rec-table tr");
@@ -68,7 +70,7 @@ export default function Recommendation(){
                     <p>Product recommendations are based on Care Profile conditions</p>                    
                     
                     <div id="recommendation-box">
-                        { recs.length > 0 ? 
+                        { recs && recs.length > 0 ? 
                         <table id="rec-table">
                             <tbody>
                                 {recs.map((rec, i) => (
@@ -88,7 +90,7 @@ export default function Recommendation(){
                     <br/>
 
                     <div id="rec-selected-box">
-                        {selectedProduct.length > 0 ? <>
+                        {selectedProduct && selectedProduct.length > 0 ? <>
                             <Row>
                                 <Col>
                                     <Row>

@@ -16,7 +16,6 @@ handler.get(async (req, res) => {
         const user = await findUserById(data.payload._id);
 
         recommend(user).then((recommendations) => {
-            console.log(recommendations)
             res.status(200).json(recommendations);
         });
     }

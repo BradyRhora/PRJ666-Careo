@@ -37,11 +37,13 @@ export default function Recommendation(){
     ], []);
     */
 
-    fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
-        setRecs(data);
-    })
+    
 
     useEffect(() => {
+        fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
+            setRecs(data);
+        })
+        
         if (recs[0])
             setSelectedProduct(recs[0]);
     }, []);
@@ -66,6 +68,7 @@ export default function Recommendation(){
                     <p>Product recommendations are based on Care Profile conditions</p>                    
                     
                     <div id="recommendation-box">
+                        { recs.length && 
                         <table id="rec-table">
                             <tbody>
                                 {recs.map((rec, i) => (
@@ -74,7 +77,7 @@ export default function Recommendation(){
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </table>}
                     </div>
                     <br/>
                     <div className="button-menu">

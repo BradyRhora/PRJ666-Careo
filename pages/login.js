@@ -16,7 +16,10 @@ export default function Login(){
     // TODO: Move this functionality to middleware
     useEffect(() => { // Only run this effect once, when the component mounts
         if (userData && userData.email) { // If user is already logged in, redirect to home page
-            router.push("/");
+            if (userData.age) 
+                router.push('/user-profile');
+            else if (userData.email)
+                router.push("/create-profile");
         }}
     , [userData, router]);
 
@@ -42,8 +45,9 @@ export default function Login(){
             // set user profile data
             setUserData(data);
 
-            // redirect user to home page
-            router.push('/create-profile');
+            // Not necessary since we redirect in the useEffect
+            //router.push('/create-profile');
+            
         } catch(e) {
             console.log(e);
             //TODO: Notify the user in some way that user/pass was incorrect

@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import {Col, Row } from "react-bootstrap"; 
 import ProductCard from "@/components/ProductCard";
 import { cartItemsAtom, userAtom } from "@/store";
+import TabNavigation from "@/components/TabNavigation";
 //import { isAuthenticated } from "@/lib/authenticate";
 
 //Going to use atoms to keep track of products selected for purchase, for now just hardcoding some products for testing

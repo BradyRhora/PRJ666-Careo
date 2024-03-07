@@ -3,7 +3,7 @@ import {NextResponse} from 'next/server';
 import { verifyJwtToken } from '@/lib/authenticate';
 
 // List of safe routes
-const AUTH_PAGES = ['/login', '/', '/sign-up', '/forgot'];
+const AUTH_PAGES = ['/login', '/', '/sign-up', '/forgot', '/terms-and-conditions'];
 
 const isAuthPages = (url) => AUTH_PAGES.some((page) => page.startsWith(url));
 
@@ -40,5 +40,5 @@ export async function middleware(req) {
 
 // If more client-side routes are added, add them here.
 export const config = {
-  matcher: ['/', '/login', '/sign-up', '/place-order', '/forgot', '/terms-and-conditions', '/create-profile', '/shopping-cart']
+  matcher: ['/', '/login', '/sign-up', '/place-order', '/forgot', '/terms-and-conditions', '/create-profile', '/shopping-cart', '/recommendation', '/user-profile']
 }

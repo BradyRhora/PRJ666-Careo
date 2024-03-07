@@ -31,15 +31,29 @@ export default function CreateProfile(props) {
   // Populate the list of conditions
   // setListConditions(props.conditions);
   useEffect(() => {
-    if (listConditions.length === 0 && selectedConditions.length === 0) {
+    if (!conditions || conditions.length === 0) {
+      fetch(`/api/data/condition`, {
+        method: 'GET',
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        let c = [];
+        for (let i = 0; i < data?.conditions?.length; i++) {
+          c.push(data.conditions[i].name);
+        }
+        setConditions(c);
+      });
+    }
+
+    if (!listConditions || (listConditions.length === 0 && selectedConditions.length === 0)) {
       setListConditions(conditions);
     }
-  }, [listConditions, conditions, selectedConditions]);
+  }, [listConditions, conditions, selectedConditions, setConditions]);
   //setListConditions(test_conditions);
 
   // Array of JSX objects in the list of conditions view
   let list = [];
-  for (let i = 0; i < listConditions.length; i++) {
+  for (let i = 0; listConditions && i < listConditions.length; i++) {
     list.push(
       <div key={i}>
         <span style={{display: "flex", justifyContent: "space-between"}}>
@@ -53,7 +67,7 @@ export default function CreateProfile(props) {
 
   // Array of JSX objects in the selected conditions view
   let selected = [];
-  for (let i = 0; i < selectedConditions.length; i++) {
+  for (let i = 0; selectedConditions && i < selectedConditions.length; i++) {
     selected.push(
       <div key={i}>
         <span style={{display: "flex", justifyContent: "space-between"}}>

@@ -8,12 +8,12 @@ import { Col, Row } from "react-bootstrap";
 export default function Recommendation(){
     const router = useRouter();
     
-    const [recs, setRecs] = useState([]);
+    //const [recs, setRecs] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState({});
 
     
 
-    /*
+    
     const recs = useMemo(() => [
         {name: "Organic Lavender Moisturizer 255ml", price: 19.99, image: "https://via.placeholder.com/150"}, 
         {name: "Anti-Aging Serum 130ml", price: 24.99, image: "https://via.placeholder.com/150"},
@@ -35,14 +35,14 @@ export default function Recommendation(){
         {name: "Revitalizing Eye Cream 30ml", price: 29.99, image: "https://via.placeholder.com/150"},
         {name: "Soothing Lip Balm 5ml", price: 8.99, image: "https://via.placeholder.com/150"}
     ], []);
-    */
+    
 
     
 
-    useEffect(() => {
+    useEffect(() => {/*
         fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
             setRecs(data);
-        })
+        })*/
 
         if (recs[0])
             setSelectedProduct(recs[0]);
@@ -88,7 +88,6 @@ export default function Recommendation(){
                     <br/>
 
                     <div id="rec-selected-box">
-                        {selectedProduct.length > 0 ? <>
                             <Row>
                                 <Col>
                                     <Row>
@@ -102,9 +101,6 @@ export default function Recommendation(){
                                     </Row>
                                 </Col>
                             </Row>
-                        </>
-                        :
-                        <p>No product selected</p>}
                     </div>
                     <br/>
                     

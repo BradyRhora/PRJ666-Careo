@@ -6,47 +6,20 @@ import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 
 export default function Recommendation(){
-    const router = useRouter();
-    
-    //const [recs, setRecs] = useState([]);
+    const router = useRouter();  
+    const [recs, setRecs] = useState();
     const [selectedProduct, setSelectedProduct] = useState({});
-
     
+    useEffect(() => {
+        if (!recs) {
+            fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
+                setRecs(data);
+            });
+        }
 
-    
-    const recs = useMemo(() => [
-        {name: "Organic Lavender Moisturizer 255ml", price: 19.99, image: "https://via.placeholder.com/150"}, 
-        {name: "Anti-Aging Serum 130ml", price: 24.99, image: "https://via.placeholder.com/150"},
-        {name: "Hydrating Facial Cream 275ml", price: 89.99, image: "https://via.placeholder.com/150"},
-        {name: "Volumizing Shampoo 500ml", price: 19.99, image: "https://via.placeholder.com/150"},
-        {name: "Curl Defining Gel 200ml", price: 24.99, image: "https://via.placeholder.com/150"},
-        {name: "Repairing Hair Mask 150ml", price: 89.99, image: "https://via.placeholder.com/150"},
-        {name: "Gentle Cleansing Milk 200ml", price: 19.99, image: "https://via.placeholder.com/150"},
-        {name: "Brightening Face Serum 30ml", price: 24.99, image: "https://via.placeholder.com/150"},
-        {name: "Moisturizing Night Cream 50ml", price: 89.99, image: "https://via.placeholder.com/150"},
-        {name: "Volumizing Hair Spray 250ml", price: 19.99, image: "https://via.placeholder.com/150"},
-        {name: "Smoothing Hair Oil 100ml", price: 24.99, image: "https://via.placeholder.com/150"},
-        {name: "Refreshing Facial Toner 150ml", price: 14.99, image: "https://via.placeholder.com/150"},
-        {name: "Soothing Facial Mask 100ml", price: 14.99, image: "https://via.placeholder.com/150"},
-        {name: "Hydrating Lip Mask 10ml", price: 9.99, image: "https://via.placeholder.com/150"},
-        {name: "Repairing Hair Serum 50ml", price: 29.99, image: "https://via.placeholder.com/150"},
-        {name: "Exfoliating Scrub 200ml", price: 12.99, image: "https://via.placeholder.com/150"},
-        {name: "Nourishing Body Lotion 300ml", price: 16.99, image: "https://via.placeholder.com/150"},
-        {name: "Revitalizing Eye Cream 30ml", price: 29.99, image: "https://via.placeholder.com/150"},
-        {name: "Soothing Lip Balm 5ml", price: 8.99, image: "https://via.placeholder.com/150"}
-    ], []);
-    
-
-    
-
-    useEffect(() => {/*
-        fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
-            setRecs(data);
-        })*/
-
-        if (recs[0])
+        if (recs && recs[0])
             setSelectedProduct(recs[0]);
-    }, []);
+    }, [recs]);
 
     function selectRec(e){
         let rows = document.querySelectorAll("#rec-table tr");
@@ -68,7 +41,7 @@ export default function Recommendation(){
                     <p>Product recommendations are based on Care Profile conditions</p>                    
                     
                     <div id="recommendation-box">
-                        { recs.length > 0 ? 
+                        { recs && recs.length > 0 ? 
                         <table id="rec-table">
                             <tbody>
                                 {recs.map((rec, i) => (
@@ -88,6 +61,7 @@ export default function Recommendation(){
                     <br/>
 
                     <div id="rec-selected-box">
+                        { (selectedProduct && selectedProduct.length > 0) ?
                             <Row>
                                 <Col>
                                     <Row>
@@ -100,7 +74,7 @@ export default function Recommendation(){
                                         <p>${selectedProduct.price}</p>
                                     </Row>
                                 </Col>
-                            </Row>
+                            </Row> : <p>Loading...</p>}
                     </div>
                     <br/>
                     

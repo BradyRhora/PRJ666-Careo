@@ -22,6 +22,7 @@ export default function Recommendation(){
     }, [recs]);
 
     function selectRec(e){
+        console.log('selecting')
         let rows = document.querySelectorAll("#rec-table tr");
         rows.forEach(row => {
             row.classList.remove("rec-selected");
@@ -46,7 +47,7 @@ export default function Recommendation(){
                             <tbody>
                                 {recs.map((rec, i) => (
                                     <tr onClick={selectRec} key={i} className={(i == 0) ? "rec-selected" : null}>
-                                        <td><p>{rec.name}</p><p>${rec.price}</p></td>
+                                        <td><p>{rec.name}</p><p>{Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(rec.price)}</p></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -61,11 +62,11 @@ export default function Recommendation(){
                     <br/>
 
                     <div id="rec-selected-box">
-                        { (selectedProduct && selectedProduct.length > 0) ?
+                        { selectedProduct ?
                             <Row>
                                 <Col>
                                     <Row>
-                                        <Image width={100} height={100} src={selectedProduct.image} alt="product image" />
+                                        <Image width={128} height={128} src={selectedProduct.image} alt="product image" />
                                     </Row>
                                 </Col>
                                 <Col>

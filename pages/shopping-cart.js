@@ -31,11 +31,11 @@ export default function ShoppingCart(){
     return (
         <>
             <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Your Cart</h1><br/>
+                <h3 style={{fontFamily:"sans-serif"}}>My Cart</h3>
                 <TabNavigation/>
             </div>
             <div>
-                <div className='centered' style={{paddingTop: '50px', paddingLeft: '30px'}}>
+                <div id="cart-items" className='centered' style={{paddingTop: '50px', paddingLeft: '30px'}}>
                     {cartItems.length > 0 ?
                         <Row className="gy-4">
                             {cartItems.map((item, i) => (
@@ -45,7 +45,9 @@ export default function ShoppingCart(){
                     }
                 </div>
                 <div className='centered' style={{paddingTop: '50px'}}>
-                    <Button variant="primary" className="centered" type="submit" onClick={handleCheckout}>Checkout</Button>
+                    <Button variant="success" className="btn-checkout" type="submit" onClick={handleCheckout}>
+                        Checkout
+                    </Button>
                 </div>
             </div>
         </>

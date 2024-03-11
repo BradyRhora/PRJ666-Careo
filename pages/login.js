@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import { userAtom } from "@/store";
 import { authenticateUser } from "@/lib/authenticate";
 import { getUserData } from "@/lib/userData";
+import Link from "next/link";
 
 export default function Login(){
     // Use this atom to see if user data is set, i.e. if the user is logged in for the purposes of dynamic views (hide login button etc.)
@@ -58,9 +59,9 @@ export default function Login(){
 
     return (
         <div>
-            <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Welcome to Careo</h1><br/>
-                <h4>Please log in to continue</h4>
+            <div style={{textAlign:"center", fontFamily:"Inter, sans-serif"}} id="hero-text">
+                <h2>Welcome to Careo</h2>
+                <h5>Please log in to continue</h5>
             </div>
             <div className='centered' style={{paddingTop: '50px'}}>
                 <Form id="login-form" onSubmit={handleSubmit}>
@@ -77,12 +78,11 @@ export default function Login(){
                     <br />
                     <div className="spaced-apart">
                         <Form.Check style={{width:'auto'}} type="checkbox" label="Remember Me" />
-                        <a href="forgot">Forgot password?</a>
+                        <Link style={{color:'green'}} href="forgot">Forgot password?</Link>
                     </div>
                     <br />
                     <div id="login-buttons" className="spaced-apart">
                         <Button variant="primary" className="pull-right" type="submit">Login</Button>
-                        
                         <Button variant="secondary" className="pull-right" type="submit" onClick={redirectToSignUp}>Sign Up</Button>
                     </div>
                 </Form>

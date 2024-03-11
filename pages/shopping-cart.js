@@ -32,7 +32,6 @@ export default function ShoppingCart(){
         <>
             <div style={{textAlign:"center"}} id="hero-text">
                 <h1>Your Cart</h1><br/>
-                <TabNavigation/>
             </div>
             <div>
                 <div className='centered' style={{paddingTop: '50px', paddingLeft: '30px'}}>

@@ -1,13 +1,17 @@
 :root {
-    --main-bg: #FEC1C1;
-    --header-bg: #EE7C7C;
+    --main-bg: #f5efeb;
+    --header-bg: transparent;
     --font-color: #000000;
-    --primary-color: #EB6D8B;
+    /*--primary-color: #EB6D8B;*/
     --secondary-color: #f0d7dd;
-    --hyperlink-color: #e91042;
-    --highlight-color: #eb889f;
-    --select-color: #be5776;
+    --tertiary-color: #AC9789;
+    
+    /*--hyperlink-color: #e91042;*/
+    --highlight-color: #dac2b1;
+    --select-color: #7a6e64;
 
+    --primary-color: #461A00;
+    --hyperlink-color: green;
 }
 
 body {
@@ -22,6 +26,13 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
     background-color: var(--primary-color) !important;
     color: white !important;
+    border-radius: 30px;
+}
+
+.btn-checkout{
+    background: var(--primary-color);
+    padding: 18px 30px 18px 30px;  
+    border-radius: 30px;
 }
 
 .btn-secondary {
@@ -75,13 +86,13 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero-text{
     text-align: center;
-    margin-top:50px;
+    margin-top:20px;
 }
 
 /**** Recommendations ****/
 
 #recommendation-box {
-    border: solid black 2px;
+    border: 2px solid var(--primary-color);
     min-height:100px;
     max-height: 300px;
     width: 400px;
@@ -98,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #rec-selected-box {
-    border: solid black 2px;
+    border: 2px solid var(--primary-color);
     border-radius: 5px;
     width: 400px;
     background-color: var(--header-bg);
@@ -118,7 +129,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #rec-table tbody {
     height: 100%;
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
 }
 
 #rec-table tr {
@@ -170,26 +181,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #login-form {
-    width: 85%;
+    width: 50%;
 }
 
 #login-buttons > button {
     width: 45%;
     height: 50px;
+    border-radius: 30px;
 }
 
 #password-rest-form {
-    width: 85%;
+    width: 50%;
 }
 
 #password-reset-button > button {
     margin-top: 20px;
     width: 45%;
     height: 50px;
+    border-radius: 30px;
 }
 
 #tab-nav, .navbar {
-    background-color: var(--header-bg);
+    /*background-color: var(--header-bg);*/
+    background-color: var(--tertiary-color);
     position:fixed;
     top:30px;
     width:100%;
@@ -231,3 +245,17 @@ h1, h2, h3, h4, h5, h6 {
         width: 90%;
     }
 }
+
+@keyframes slideInFromLeft {
+    0% {
+      opacity: 0%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+#cart-items{
+    animation: 1s ease-in 0s 1 slideInFromLeft;
+}
+
+

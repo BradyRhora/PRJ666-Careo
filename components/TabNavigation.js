@@ -18,6 +18,9 @@ export default function TabNavigation() {
                         <Nav.Item>
                             <Nav.Link href='/shopping-cart'>Cart</Nav.Link>
                         </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href='/account-details'>Account</Nav.Link>
+                        </Nav.Item>
                     </Nav>
                 </Navbar.Collapse>
         </Navbar>

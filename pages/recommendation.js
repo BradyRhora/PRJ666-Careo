@@ -31,6 +31,10 @@ export default function Recommendation(){
         setSelectedProduct(recs[e.currentTarget.rowIndex]);
     }
 
+    function formatPrice(price){
+        return Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price);
+    }
+
     /* TODO: The selected product box (rec-selected-box) still needs a section for ingredients and will have to be modified when the actual recommendation system is implemented */
     return (
         <>
@@ -47,7 +51,7 @@ export default function Recommendation(){
                             <tbody>
                                 {recs.map((rec, i) => (
                                     <tr onClick={selectRec} key={i} className={(i == 0) ? "rec-selected" : null}>
-                                        <td><p>{rec.name}</p><p>{Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(rec.price)}</p></td>
+                                        <td><p>{rec.name}</p><p>{formatPrice(rec.price)}</p></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -62,7 +66,7 @@ export default function Recommendation(){
                     <br/>
 
                     <div id="rec-selected-box">
-                        { selectedProduct ?
+                        { selectedProduct && selectedProduct.name ?
                             <Row>
                                 <Col>
                                     <Row>
@@ -72,13 +76,12 @@ export default function Recommendation(){
                                 <Col>
                                     <Row style={{flexWrap:"wrap"}}>
                                         <h5>{selectedProduct.name}</h5>
-                                        <p>${selectedProduct.price}</p>
+                                        <p>{formatPrice(selectedProduct.price)}</p>
                                     </Row>
                                 </Col>
-                            </Row> : <p>Loading...</p>}
+                            </Row> : <p>Nothing selected.</p>}
                     </div>
-                    <br/>
-                    
+                    <br/>                    
                     <Button variant="primary" className="centered" type="submit">Add to Cart</Button>
                     <br/>
                 </div>

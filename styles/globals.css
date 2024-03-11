@@ -3,7 +3,11 @@
     --header-bg: #EE7C7C;
     --font-color: #000000;
     --primary-color: #EB6D8B;
+    --secondary-color: #f0d7dd;
     --hyperlink-color: #e91042;
+    --highlight-color: #eb889f;
+    --select-color: #be5776;
+
 }
 
 body {
@@ -20,6 +24,11 @@ h1, h2, h3, h4, h5, h6 {
     color: white !important;
 }
 
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    color: black !important;
+}
+
 .spaced-apart {
     display: flex;
     justify-content: space-between;
@@ -28,11 +37,23 @@ h1, h2, h3, h4, h5, h6 {
 .centered {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .auto-margin {
     margin-left:auto;
     margin-right:auto;
+}
+
+.button-menu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.button-menu > button {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .condition-card {
@@ -57,6 +78,72 @@ h1, h2, h3, h4, h5, h6 {
     margin-top:50px;
 }
 
+/**** Recommendations ****/
+
+#recommendation-box {
+    border: solid black 2px;
+    min-height:100px;
+    max-height: 300px;
+    width: 400px;
+    overflow-y: auto;
+    border-radius: 5px;
+}
+
+.rec-selected {
+    background-color: var(--select-color);
+}
+
+.rec-selected:hover {
+    background-color: var(--select-color) !important;
+}
+
+#rec-selected-box {
+    border: solid black 2px;
+    border-radius: 5px;
+    width: 400px;
+    background-color: var(--header-bg);
+    padding: 10px;
+    overflow: hidden;
+    flex-wrap:nowrap;
+}
+
+#rec-selected-box img {
+    width: unset;
+    margin:auto;
+}
+
+#rec-table {
+    width: 100%;
+}
+
+#rec-table tbody {
+    height: 100%;
+    background-color: var(--primary-color);
+}
+
+#rec-table tr {
+    border: solid black 1px;
+    cursor: pointer;
+    height: 35px;
+}
+
+#rec-table td {    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+#rec-table td > * {
+    margin: 0px;
+}
+
+#rec-table tr:hover {
+    background-color: var(--highlight-color);
+}
+
+/*************************/
+
 #header {
     background-color: var(--header-bg);
     position: fixed;
@@ -66,6 +153,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
 }
+
 
 #header > span {
     margin:5px;
@@ -100,8 +188,25 @@ h1, h2, h3, h4, h5, h6 {
     height: 50px;
 }
 
-#tab-nav {
-    background-color: #EE7C7C;
+#tab-nav, .navbar {
+    background-color: var(--header-bg);
+    position:fixed;
+    top:30px;
+    width:100%;
+    z-index:99;
+}
+
+.navbar-toggler {
+    z-index:101;
+}
+
+.navbar-toggler{
+    background-color:var(--header-bg);
+    border: none;
+}
+
+.navbar-toggler-icon { /* To change the color, we need to set stroke=[] in the SVG */
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28233, 16, 66, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
 }
 
 @media (max-width: 768px) {
@@ -109,12 +214,25 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
     }
 
+    .centered > p {
+        width: 95%;
+    }
+
     .profile-input-group {
         width:100%;
     }
-}
 
-.delete-modal .modal-content {
-    background-color: #EE7C7C;
-    color: white;
+    .delete-modal .modal-content {
+      background-color: #EE7C7C;
+      color: white;
+    }
+
+    #recommendation-box {
+        width: 95%;
+        max-height:200px;
+    }
+
+    #rec-selected-box {
+        width: 90%;
+    }
 }

@@ -75,7 +75,6 @@ export default function UserProfile() {
         <div style={{textAlign:"center"}} id="hero-text">
           <h1>Your Care Profile</h1>
           <br />
-          <TabNavigation/>
         </div>
         <br/>
         <Container fluid style={{marginBottom:"5em"}}>

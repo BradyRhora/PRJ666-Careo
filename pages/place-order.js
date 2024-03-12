@@ -72,7 +72,7 @@ export default function PlaceOrder(){
 				<Row className="mb-3">
 					<Form.Group as={Col}>
 						<Form.Label>Postal Code</Form.Label>
-						<Form.Control type="text" placeholder="M2J 2X5"></Form.Control>
+						<Form.Control type="text" placeholder="M2J 2X5" required></Form.Control>
 					</Form.Group>
 				</Row>
 				<Row className="mb-3">

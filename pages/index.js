@@ -4,7 +4,6 @@ import Link from "next/link";
 import Button from "react-bootstrap/Button";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-
 import { userAtom } from "@/store";
 import { useAtomValue } from "jotai";
 
@@ -22,19 +21,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className} centered`}>
-        <div id="hero-text">
-          <h1>Careo</h1>
-          <h4>Your Self-Care Superhero</h4>
-        </div>
-        <Image id="landing-image" width="900" height="900" src="/assets/landing.jpg" alt="Careo Skin Care Products" priority></Image>
-        {loggedIn ? null :<>
-        <Link href="/sign-up">
-          <Button>Register Now</Button>
-        </Link>
-        <div id="login-footer" style={{textAlign:"center"}}>Already have an account? <Link href="/login">Log In here.</Link></div>
-        </>}
-      </main>
+    <Image width='1920' height='600' style={{position: 'fixed', objectFit: 'cover'}} src="/assets/brown-bottles.jpg" />
+    
+    <div style={{top: '30px', display:'grid', justifyContent:'center', position: 'relative', color: 'white', fontSize: 96, fontFamily: 'Crimson Text'}}>
+      <center><span>Careo</span></center>
+      <center><span>your self-care superhero</span></center>
+      </div>
+    <section style={{display:'grid', justifyContent: 'center', position: 'relative', top: '400px', bottom: '115px'}}>
+      <Link href='/sign-up'><center><Button className={`${styles.register}`}>Register Here</Button></center></Link>
+      <p style={{marginTop:'10px',fontSize: '24px'}}>Already have an account? <Link style={{color:'green'}}href="/login">Log In</Link>.</p>
+    </section>
+
     </>
   );
 }
+ 

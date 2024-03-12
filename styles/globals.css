@@ -29,6 +29,10 @@ h1, h2, h3, h4, h5, h6 {
     color: black !important;
 }
 
+.inline-flex {
+    display: inline-flex;
+}
+
 .spaced-apart {
     display: flex;
     justify-content: space-between;
@@ -211,6 +215,14 @@ h1, h2, h3, h4, h5, h6 {
 
 #place-order-form {
     width: 85%;
+}
+
+#billing-address-box {
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: var(--secondary-color);
 }
 
 #payment-info-form {

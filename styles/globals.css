@@ -44,6 +44,10 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-flex;
 }
 
+.inline-flex {
+    display: inline-flex;
+}
+
 .spaced-apart {
     display: flex;
     justify-content: space-between;
@@ -225,6 +229,22 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-toggler-icon { /* To change the color, we need to set stroke=[] in the SVG */
     background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28233, 16, 66, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}
+
+#place-order-form {
+    width: 85%;
+}
+
+#billing-address-box {
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: var(--secondary-color);
+}
+
+#payment-info-form {
+    width: 85%;
 }
 
 #place-order-form {

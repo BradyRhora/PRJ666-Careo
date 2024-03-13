@@ -33,6 +33,8 @@ export default function Recommendation(){
     }
 
     function addSelectedProductToCart(){
+        if (selectedProduct?._id == null) return;
+
         fetch("/api/cart/addtocart", {
             method: "POST",
             headers: {
@@ -45,6 +47,14 @@ export default function Recommendation(){
             })
         }).then(res => res.json()).then(data => {
             setCartItems(data.items);
+            let button = document.getElementById("add-to-cart-button")
+            button.innerText = "✔";
+            button.style.backgroundColor = "green"; // why is this not working
+
+            setTimeout(() => {
+                button.innerText = "Add to Cart";
+                button.style.backgroundColor = "";
+            }, 1000);
         });
     }
 
@@ -69,7 +79,7 @@ export default function Recommendation(){
                                 ))}
                             </tbody>
                         </table> :
-                        <div class="loading">
+                        <div className="loading">
                             <div></div>
                             <div></div>
                             <div></div>
@@ -99,7 +109,7 @@ export default function Recommendation(){
                             </Row> : <p>Nothing selected.</p>}
                     </div>
                     <br/>                    
-                    <Button variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
+                    <Button id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
                     <br/>
                 </div>
             </div>

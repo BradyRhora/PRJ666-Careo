@@ -1,14 +1,17 @@
 import { Button } from "react-bootstrap"
 import { useRouter } from "next/router";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { userAtom, cartItemsAtom } from "@/store";
 
 export default function Recommendation(){
-    const router = useRouter();  
+    const router = useRouter();
+    const user = useAtomValue(userAtom);
     const [recs, setRecs] = useState();
     const [selectedProduct, setSelectedProduct] = useState({});
+    const [cartItems, setCartItems] = useAtom(cartItemsAtom);
     
     useEffect(() => {
         if (!recs) {
@@ -22,17 +25,27 @@ export default function Recommendation(){
     }, [recs]);
 
     function selectRec(e){
-        console.log('selecting')
-        let rows = document.querySelectorAll("#rec-table tr");
-        rows.forEach(row => {
-            row.classList.remove("rec-selected");
-        });
-        e.currentTarget.classList.add("rec-selected");
         setSelectedProduct(recs[e.currentTarget.rowIndex]);
     }
 
     function formatPrice(price){
         return Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price);
+    }
+
+    function addSelectedProductToCart(){
+        fetch("/api/cart/addtocart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: user._id,
+                productId: selectedProduct._id,
+                quantity: 1
+            })
+        }).then(res => res.json()).then(data => {
+            setCartItems(data.items);
+        });
     }
 
     /* TODO: The selected product box (rec-selected-box) still needs a section for ingredients and will have to be modified when the actual recommendation system is implemented */
@@ -50,13 +63,17 @@ export default function Recommendation(){
                         <table id="rec-table">
                             <tbody>
                                 {recs.map((rec, i) => (
-                                    <tr onClick={selectRec} key={i} className={(i == 0) ? "rec-selected" : null}>
+                                    <tr onClick={selectRec} key={i} className={(rec._id == selectedProduct._id) ? "rec-selected" : null}>
                                         <td><p>{rec.name}</p><p>{formatPrice(rec.price)}</p></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table> :
-                        <p>Loading...</p>}
+                        <div class="loading">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>}
                     </div>
                     <br/>
                     <div className="button-menu">
@@ -82,7 +99,7 @@ export default function Recommendation(){
                             </Row> : <p>Nothing selected.</p>}
                     </div>
                     <br/>                    
-                    <Button variant="primary" className="centered" type="submit">Add to Cart</Button>
+                    <Button variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
                     <br/>
                 </div>
             </div>

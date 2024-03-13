@@ -2,14 +2,20 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
 
 import { atom, useAtom, useAtomValue } from "jotai";
-import { orderInfoAtom } from "@/store";
+import { orderInfoAtom, userAtom } from "@/store";
 import { use, useEffect } from "react";
+
+import { Order } from "@/lib/models/order";
+import { Address } from "@/lib/models/address";
+import { get } from "mongoose";
 
 const paymentAtom = atom("creditCard");
 const billingAddressAtom = atom(true);
 
 export default function PlaceOrder() {
     const orderInfo = useAtomValue(orderInfoAtom);
+    const user = useAtomValue(userAtom);
+
     const [billingAddressSame, setBillingAddressSame] = useAtom(billingAddressAtom);
     const [paymentMethod, setPaymentMethod] = useAtom(paymentAtom);
 
@@ -27,6 +33,94 @@ export default function PlaceOrder() {
 
     function changePaymentMethod(e) {
         setPaymentMethod(e.target.name);
+    }
+
+    function validateCreditCard(cardNumber, expiryDate, securityCode) {
+        // TODO: implement this 
+        return true;
+    }
+
+    function getCartItems() {
+        fetch("/api/user/cart?userId=" + user._id)
+        .then(res => res.json())
+        .then(data => {
+            return data.products;
+        });
+    }
+
+    function submit(e) {
+        e.preventDefault();
+
+        let form = document.getElementById("payment-info-form");
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        if (paymentMethod === "paypal") {
+            // TODO: implement PayPal payment
+        } else if (paymentMethod === "creditCard") {
+            let creditCard = {
+                cardNumber: form[4].value,
+                expiryDate: form[5].value,
+                securityCode: form[6].value
+            };
+
+            if (!validateCreditCard(creditCard.cardNumber, creditCard.expiryDate, creditCard.securityCode)) {
+                alert("Invalid credit card information");
+                return;
+            }
+            
+            let shipping = {
+                first_name: orderInfo.firstName,
+                last_name: orderInfo.lastName,
+                address: orderInfo.address,
+                apartment: orderInfo.apartment,
+                city: orderInfo.city,
+                province: orderInfo.province,
+                country: orderInfo.country,
+                postal_code: orderInfo.postalCode
+            }
+
+            let billing = null;
+            if (billingAddressSame) {
+                billing = shipping;
+            } else {
+                billing = {
+                    first_name: form[0].value,
+                    last_name: form[1].value,
+                    address: form[2].value,
+                    apartment: form[3].value,
+                    city: form[7].value,
+                    province: form[8].value,
+                    country: form[9].value,
+                    postal_code: form[10].value
+                };
+            }
+
+            let shippingAddress = new Address(shipping);
+            let billingAddress = new Address(billing);
+
+            let items = getCartItems();
+            let total = 0;
+
+            for (let i = 0; i < items.length; i++) {
+                total += items[i].price * items[i].quantity;
+            }
+
+            let order = new Order({
+                user_id: user._id,
+                product_ids: items,
+                address: shippingAddress,
+                billing_address: billingAddress,
+                payment_method: paymentMethod,
+                total: total
+            });
+
+            debugger;
+
+
+        }
     }
 
     // TODO: maybe replace 'Credit Card' and 'PayPal' with icons

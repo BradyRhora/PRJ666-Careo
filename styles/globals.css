@@ -1,6 +1,6 @@
 :root {
     --main-bg: #f5efeb;
-    --header-bg: transparent;
+    --header-bg: var(--main-bg);
     --font-color: #000000;
     /*--primary-color: #EB6D8B;*/
     --secondary-color: #f0d7dd;

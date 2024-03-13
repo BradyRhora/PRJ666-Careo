@@ -1,6 +1,10 @@
+import { useAtomValue } from 'jotai';
+import { cartItemsAtom } from '@/store';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 export default function TabNavigation() {
+    const cartItems = useAtomValue(cartItemsAtom);
+    
     return (
         <Navbar expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -16,7 +20,7 @@ export default function TabNavigation() {
                             <Nav.Link href='/compatibility'>Compatibility</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href='/shopping-cart'>Cart</Nav.Link>
+                            <Nav.Link href='/shopping-cart'>Cart {cartItems?.length > 0 && `(${cartItems.length})`}</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link href='/account-details'>Account</Nav.Link>

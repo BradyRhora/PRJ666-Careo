@@ -1,33 +1,33 @@
-import { Form, Alert, Button } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { useRouter } from "next/router";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, atom } from "jotai";
 import {Col, Row } from "react-bootstrap"; 
 import ProductCard from "@/components/ProductCard";
-import { cartItemsAtom, userAtom } from "@/store";
+import { userAtom, cartItemsAtom } from "@/store";
 import TabNavigation from "@/components/TabNavigation";
-//import { isAuthenticated } from "@/lib/authenticate";
+import { useEffect } from "react";
 
-//Going to use atoms to keep track of products selected for purchase, for now just hardcoding some products for testing
 export default function ShoppingCart(){
     const router = useRouter();
+    const user = useAtomValue(userAtom);
     const [cartItems, setCartItems] = useAtom(cartItemsAtom);
-
-    //No IsAuthenticated() function in authenticate.js
-    /*if (!isAuthenticated()) {
-		router.push('/login');
-	}*/
-
-    if(!cartItems){
-        return null;
-
-    }
+    
+    useEffect(() => {
+        if (!user || !user._id) return;
+        console.log('getting cart items')
+        fetch("/api/cart/getcart?userId=" + user._id).then(res => res.json()).then(data => {
+            console.log('got cart items')
+            console.log(data);
+            setCartItems(data.items);
+        });
+    }, [user]);
+    
 
     const handleCheckout = async (e) => {
         e.preventDefault();
         router.push('/place-order');
         
     }
-
     return (
         <>
             <div style={{textAlign:"center"}} id="hero-text">
@@ -36,7 +36,7 @@ export default function ShoppingCart(){
             </div>
             <div>
                 <div id="cart-items" className='centered' style={{paddingTop: '50px', paddingLeft: '30px'}}>
-                    {cartItems.length > 0 ?
+                    {cartItems?.length > 0 ?
                         <Row className="gy-4">
                             {cartItems.map((item, i) => (
                                 <Col lg={3} key={i}><ProductCard cartItem={item} /></Col>

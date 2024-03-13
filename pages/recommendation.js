@@ -69,7 +69,11 @@ export default function Recommendation(){
                                 ))}
                             </tbody>
                         </table> :
-                        <p>Loading...</p>}
+                        <div class="loading">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>}
                     </div>
                     <br/>
                     <div className="button-menu">

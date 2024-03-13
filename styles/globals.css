@@ -97,6 +97,36 @@ h1, h2, h3, h4, h5, h6 {
     margin-top:20px;
 }
 
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:45px;
+    font-weight: bold;
+}
+
+.loading div {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: bounce 0.8s infinite alternate;
+  }
+  
+  .loading div:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .loading div:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+  }
+
 /**** Recommendations ****/
 
 #recommendation-box {
@@ -307,8 +337,17 @@ h1, h2, h3, h4, h5, h6 {
       opacity: 100%;
     }
   }
+
 #cart-items{
     animation: 1s ease-in 0s 1 slideInFromLeft;
 }
 
+#cart-items .card {
+    height: 100%;
+}
 
+#cart-items .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

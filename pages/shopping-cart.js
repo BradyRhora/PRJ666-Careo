@@ -21,7 +21,6 @@ export default function ShoppingCart(){
             setCartItems(data.items);
         });
     }, [user]);
-    
 
     const handleCheckout = async (e) => {
         e.preventDefault();

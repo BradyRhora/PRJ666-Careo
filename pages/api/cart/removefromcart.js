@@ -1,14 +1,14 @@
-import { addToUserCart } from "@/lib/models/cart";
+import { removeFromUserCart } from "@/lib/models/cart";
 import { createRouter} from "next-connect";
 import connectDB from '@/lib/middleware/mongodb';
 
 const handler = createRouter();
 handler.use(connectDB)
 
-// POST /api/user/cart/addtocart?userId=123&productId=456&quantity=1
+// POST /api/user/cart/removefromcart?userId=123&productId=456&quantity=1
 handler.post(async (req, res) => {
-    const { userId, productId, quantity } = req.body;
-    const cart = await addToUserCart(userId, productId, quantity);
+    const { userId, productId, quantity } = req.query;
+    const cart = await removeFromUserCart(userId, productId, quantity);
     res.status(200).json(cart);
 });
 

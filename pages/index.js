@@ -21,15 +21,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-    <Image width='1920' height='600' style={{position: 'fixed', objectFit: 'cover'}} src="/assets/brown-bottles.jpg" />
+    <Image className={`${styles.landingImage}`} width='1920' height='600' src="/assets/brown-bottles.jpg" />
     
-    <div style={{top: '30px', display:'grid', justifyContent:'center', position: 'relative', color: 'white', fontSize: 96, fontFamily: 'Crimson Text'}}>
+    <div className={`${styles.landingTitle}`}>
       <center><span>Careo</span></center>
-      <center><span>your self-care superhero</span></center>
+      <center><span style={{fontFamily:'cursive'}}>your self-care superhero</span></center>
       </div>
-    <section style={{display:'grid', justifyContent: 'center', position: 'relative', top: '400px', bottom: '115px'}}>
+    <section className={`${styles.landingSection}`}>
       <Link href='/sign-up'><center><Button className={`${styles.register}`}>Register Here</Button></center></Link>
-      <p style={{marginTop:'10px',fontSize: '24px'}}>Already have an account? <Link style={{color:'green'}}href="/login">Log In</Link>.</p>
+      <p style={{marginTop:'10px',fontSize: '24px', backgroundColor:'#f5efeb'}}>Already have an account? <Link style={{color:'green'}}href="/login">Log In</Link>.</p>
     </section>
 
     </>

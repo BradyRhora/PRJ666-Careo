@@ -1,15 +1,36 @@
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 
-//import { isAuthenticated } from "@/lib/authenticate";
+import { useAtom } from "jotai";
+import { orderInfoAtom } from "@/store";
 
 export default function PlaceOrder(){
 	const router = useRouter();
+	const [orderInfo, setOrderInfo] = useAtom(orderInfoAtom);
 
-    //No IsAuthenticated() function in authenticate.js
-	/*if (!isAuthenticated()) {
-		router.push('/login');
-	}*/
+	function submit(e) {
+		e.preventDefault();
+
+		let form = document.getElementById("place-order-form");
+		
+		if (!form.checkValidity()) {
+			form.reportValidity();
+			return;
+		}
+
+		let data = {
+			firstName: form[0].value,
+			lastName: form[1].value,
+			address: form[2].value,
+			apartment: form[3].value,
+			city: form[4].value,
+			province: form[5].value,
+			country: form[6].value,
+			postalCode: form[7].value
+		};
+		setOrderInfo(data);
+		router.push('/payment');	
+	}
 
 	return(
 		<>
@@ -72,12 +93,12 @@ export default function PlaceOrder(){
 				<Row className="mb-3">
 					<Form.Group as={Col}>
 						<Form.Label>Postal Code</Form.Label>
-						<Form.Control type="text" placeholder="M2J 2X5"></Form.Control>
+						<Form.Control type="text" placeholder="M2J 2X5" required></Form.Control>
 					</Form.Group>
 				</Row>
 				<Row className="mb-3">
 					<Col>
-						<Button variant="primary" type="Submit">Next: Payment</Button>
+						<Button onClick={submit} variant="primary" type="Submit">Next: Payment</Button>
 					</Col>				
 				</Row>
 			</Form>

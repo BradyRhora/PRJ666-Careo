@@ -21,8 +21,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-    <Image className={`${styles.landingImage}`} width='1920' height='600' src="/assets/brown-bottles.jpg" />
+    <Image className={`${styles.landingImage}`} width='1920' height='600' src="/assets/brown-bottles.jpg" alt="landing image"/>
     
     <div className={`${styles.landingTitle}`}>
       <center><span>Careo</span></center>

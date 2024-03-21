@@ -261,21 +261,14 @@ h1, h2, h3, h4, h5, h6 {
     background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28233, 16, 66, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
 }
 
-#place-order-form {
-    width: 85%;
+.divider {
+    border-top: 1px solid black;
+    width:calc(100% + 20px);
+    margin-left:-10px;
+    margin-right:320px;
 }
 
-#billing-address-box {
-    border: 1px solid black;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    background-color: var(--secondary-color);
-}
-
-#payment-info-form {
-    width: 85%;
-}
+/********** Orders **********/
 
 #place-order-form {
     width: 85%;
@@ -292,6 +285,42 @@ h1, h2, h3, h4, h5, h6 {
 #payment-info-form {
     width: 85%;
 }
+
+#place-order-form {
+    width: 85%;
+}
+
+#billing-address-box {
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: var(--secondary-color);
+}
+
+#payment-info-form {
+    width: 85%;
+}
+
+#order-summary {
+    width: 85%;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding:10px;
+    margin:30px;
+    background-color: var(--secondary-color);
+}
+
+#order-summary > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#order-summary  p {
+    margin:0px;
+}
+
+/*************************/
 
 @media (max-width: 768px) {
     .profile-input-section {

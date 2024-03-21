@@ -12,7 +12,7 @@ handler.get(async (req, res) => {
     if (cookies.token) {
       const data = await verifyJwtToken(cookies.token);
       const user = await findUserById(data.payload._id);
-      console.log("GOT USER: " + user);
+      //console.log("GOT USER: " + user);
       res.status(200).json(user);
     } else {
       throw new Error('No token found');

@@ -69,16 +69,16 @@ export default function PlaceOrder(){
 					<Form.Group as={Col}>
 						<Form.Label>Province</Form.Label>
 						<Form.Select>
-							<option value="1">AB</option>
-							<option value="2">BC</option>
-							<option value="3">MB</option>
-							<option value="4">NB</option>
-							<option value="5">NL</option>
-							<option value="6">NS</option>
-							<option value="7">ON</option>
-							<option value="8">PE</option>
-							<option value="9">QC</option>
-							<option value="10">SK</option>
+							<option value="AB">AB</option>
+							<option value="BC">BC</option>
+							<option value="MB">MB</option>
+							<option value="NB">NB</option>
+							<option value="NL">NL</option>
+							<option value="NS">NS</option>
+							<option value="ON">ON</option>
+							<option value="PE">PE</option>
+							<option value="QC">QC</option>
+							<option value="SK">SK</option>
 						</Form.Select>
 					</Form.Group>
 				</Row>
@@ -86,7 +86,7 @@ export default function PlaceOrder(){
 					<Form.Group as={Col}>
 						<Form.Label>Country</Form.Label>
 						<Form.Select>
-							<option value="1">Canada</option>
+							<option value="Canada">Canada</option>
 						</Form.Select>
 					</Form.Group>
 				</Row>

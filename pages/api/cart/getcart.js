@@ -1,11 +1,11 @@
 import { createRouter} from "next-connect";
-import { getCartDataByUserId, Cart } from "@/lib/models/cart";
+import { getCartDataByUserId } from "@/lib/models/cart";
 import connectDB from '@/lib/middleware/mongodb';
 
 const handler = createRouter();
 handler.use(connectDB)
 
-// GET /api/user/cart?userId=userId
+// GET /api/cart?userId=userId
 handler.get(async (req, res) => {
     const userId = req.query.userId;
     const cart = await getCartDataByUserId(userId);

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { userAtom, cartItemsAtom } from "@/store";
+import { formatPrice } from "@/lib/utils";
 
 export default function Recommendation(){
     const router = useRouter();
@@ -26,10 +27,6 @@ export default function Recommendation(){
 
     function selectRec(e){
         setSelectedProduct(recs[e.currentTarget.rowIndex]);
-    }
-
-    function formatPrice(price){
-        return Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price);
     }
 
     function addSelectedProductToCart(){

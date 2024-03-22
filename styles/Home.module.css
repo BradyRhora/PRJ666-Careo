@@ -224,7 +224,7 @@
   object-fit: cover;
   width: 1920px;
   height: 600px;
-  filter: brightness(80%);
+  filter: brightness(70%);
 }
 .landingSection{
   display: grid;

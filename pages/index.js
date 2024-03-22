@@ -26,7 +26,7 @@ export default function Home() {
       
       <div className={`${styles.landingTitle}`}>
         <center><span>Careo</span></center>
-        <center><span style={{fontFamily:'cursive'}}>your self-care superhero</span></center>
+        <center><span style={{fontFamily:'cursive, Helvetica, Times New Roman'}}>your self-care superhero</span></center>
         </div>
       <section className={`${styles.landingSection}`}>
         <Link href='/sign-up'><center><Button className={`${styles.register}`}>Register Here</Button></center></Link>

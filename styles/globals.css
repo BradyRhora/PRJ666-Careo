@@ -3,7 +3,7 @@
     --header-bg: var(--main-bg);
     --font-color: #000000;
     /*--primary-color: #EB6D8B;*/
-    --secondary-color: #f0d7dd;
+    --secondary-color: white;
     --tertiary-color: #AC9789;
     
     /*--hyperlink-color: #e91042;*/
@@ -38,6 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary {
     background-color: var(--secondary-color) !important;
     color: black !important;
+    border-radius: 30px;
 }
 
 .inline-flex {
@@ -68,6 +69,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    margin: 1rem 0 1rem 0;
 }
 
 .button-menu > button {
@@ -94,7 +96,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero-text{
     text-align: center;
-    margin-top:20px;
+    margin-top: 5rem;
 }
 
 .loading {

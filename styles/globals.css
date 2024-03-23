@@ -40,6 +40,10 @@ h1, h2, h3, h4, h5, h6 {
     color: black !important;
     border-radius: 30px;
 }
+.btn-danger {
+    border-radius: 30px;
+    border: 0.5px solid black;
+}
 
 .inline-flex {
     display: inline-flex;
@@ -297,6 +301,11 @@ h1, h2, h3, h4, h5, h6 {
     width: 85%;
 }
 
+.delete-modal .modal-content {
+    background-color: #AC9789;
+    color: black;
+  }
+
 @media (max-width: 768px) {
     .profile-input-section {
         width: 100%;
@@ -308,11 +317,6 @@ h1, h2, h3, h4, h5, h6 {
 
     .profile-input-group {
         width:100%;
-    }
-
-    .delete-modal .modal-content {
-      background-color: #EE7C7C;
-      color: white;
     }
 
     #recommendation-box {

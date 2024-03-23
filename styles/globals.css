@@ -138,6 +138,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 400px;
     overflow-y: auto;
     border-radius: 5px;
+
 }
 
 .rec-selected {
@@ -189,7 +190,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
-#rec-table tr:hover {
+
+#rec-table td:hover {
     background-color: var(--highlight-color);
 }
 

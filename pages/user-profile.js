@@ -96,9 +96,9 @@ export default function UserProfile() {
           </Row>
           <br /><br />
           <Row className="mx-auto" style={{maxWidth: "25em"}}>
-            <Button>View Saved Lists</Button>
+            <Button onClick={()=>{alert("Coming soon")}}>View Saved Lists</Button>
             <hr></hr>
-            <Button>Update User Conditions</Button>
+            <Button onClick={()=>{alert("Coming soon")}}>Update User Conditions</Button>
           </Row>
         </Container>
       </main>

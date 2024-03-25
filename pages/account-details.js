@@ -179,11 +179,8 @@ export default function AccountDetails(){
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Account</Modal.Title>
                 </Modal.Header>
-                <Modal.Body id="modal-content">
-                    <p>Are you sure you want to delete your account?</p>
-                    <br />
-                    <p>Please re-enter your email and password to confirm</p>
-                    
+                <Modal.Body>
+                    <p style={{color:"white"}}>Are you sure you want to delete your account? <br />Please re-enter your email and password to confirm</p>
                     {/* Using a form to get user input */}
                     <Form.Control type="text" placeholder="Enter your email." value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
                     <br/>

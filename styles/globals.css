@@ -3,7 +3,7 @@
     --header-bg: var(--main-bg);
     --font-color: #000000;
     /*--primary-color: #EB6D8B;*/
-    --secondary-color: #f0d7dd;
+    --secondary-color: white;
     --tertiary-color: #AC9789;
     
     /*--hyperlink-color: #e91042;*/
@@ -38,6 +38,11 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary {
     background-color: var(--secondary-color) !important;
     color: black !important;
+    border-radius: 30px;
+}
+.btn-danger {
+    border-radius: 30px;
+    border: 0.5px solid black;
 }
 
 .inline-flex {
@@ -68,6 +73,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    margin: 1rem 0 1rem 0;
 }
 
 .button-menu > button {
@@ -94,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero-text{
     text-align: center;
-    margin-top:20px;
+    margin-top: 5rem;
 }
 
 .loading {
@@ -136,6 +142,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 400px;
     overflow-y: auto;
     border-radius: 5px;
+
 }
 
 .rec-selected {
@@ -187,7 +194,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
-#rec-table tr:hover {
+
+#rec-table td:hover {
     background-color: var(--highlight-color);
 }
 
@@ -294,6 +302,11 @@ h1, h2, h3, h4, h5, h6 {
     width: 85%;
 }
 
+.delete-modal .modal-content {
+    background-color: var(--primary-color);
+    color: black;
+  }
+
 @media (max-width: 768px) {
     .profile-input-section {
         width: 100%;
@@ -305,11 +318,6 @@ h1, h2, h3, h4, h5, h6 {
 
     .profile-input-group {
         width:100%;
-    }
-
-    .delete-modal .modal-content {
-      background-color: #EE7C7C;
-      color: white;
     }
 
     #recommendation-box {
@@ -328,6 +336,11 @@ h1, h2, h3, h4, h5, h6 {
     #payment-info-form {
         width: 95%;
     }
+
+    #landingTitle{
+        font-size: 24px;
+    }
+
 }
 
 @keyframes slideInFromLeft {

@@ -123,9 +123,7 @@ export default function Recommendation(){
     /* TODO: The selected product box (rec-selected-box) still needs a section for ingredients and will have to be modified when the actual recommendation system is implemented */
     return (
         <>
-            <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Recommendations</h1><br/>
-            </div>
+            <h1 style={{textAlign:"center"}} id="hero-text">Recommendations</h1><br/>
             <div>
                 <div className='centered' style={{flexDirection:"column"}}>
                     <p>Product recommendations are based on Care Profile conditions</p>                    
@@ -152,9 +150,6 @@ export default function Recommendation(){
                         <Button variant="primary" className="centered" onClick={saveCurrList}>Save List</Button>
                         <Button variant="secondary" className="centered" onClick={loadSavedList}>Load List</Button>
                     </div>
-                    <br/>
-                    <div>
-                    </div>
                     <div id="rec-selected-box">
                         { selectedProduct && selectedProduct.name ?
                             <Row>
@@ -170,10 +165,8 @@ export default function Recommendation(){
                                     </Row>
                                 </Col>
                             </Row> : <p>Nothing selected.</p>}
-                    </div>
-                    <br/>                    
-                    <Button id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
-                    <br/>
+                    </div>          
+                    <Button style={{marginTop:'1rem'}}id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
                 </div>
             </div>
         </>

@@ -162,7 +162,7 @@ export default function AccountDetails(){
                         <Form.Label>Email:</Form.Label>
                         <Form.Control type="email" value={userData.email} id="userName" name="userName" readOnly/>
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control type="email" value="*************" id="password" name="password" readOnly/>
+                        <Form.Control type="password" value="*************" id="password" name="password" readOnly/>
                     </Form.Group>
                 </Form>
             </div>
@@ -175,11 +175,11 @@ export default function AccountDetails(){
             </Container>
 
             {/* Modal (Alert Window For Delete Account) */}
-            <Modal show={deleteAccountModal} onHide={() => setDeleteAccountModal(false)}>
+            <Modal show={deleteAccountModal} onHide={() => setDeleteAccountModal(false)} className="account-info-modal">
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Account</Modal.Title>
                 </Modal.Header>
-                <Modal.Body id="modal-content">
+                <Modal.Body className="modal-content">
                     <p>Are you sure you want to delete your account?</p>
                     <br />
                     <p>Please re-enter your email and password to confirm</p>
@@ -189,18 +189,19 @@ export default function AccountDetails(){
                     <br/>
                     <Form.Control type="password" placeholder="Enter your password." value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} />
                     <Modal.Footer>
-                        <Button onClick={() => setDeleteAccountModal(false)}>No</Button>
-                        <Button variant="danger" onClick={handleDeleteUser}>Yes</Button>
+                        {/* TODO: Add CSS to make the buttons curved and set one colour to blue for primary and one to red for danger. Should fo the same for buttons that trigger modal */}
+                        <Button variant="outline-primary" onClick={() => setDeleteAccountModal(false)}>No</Button>
+                        <Button variant="outline-danger" class="danger-button" onClick={handleDeleteUser}>Yes</Button>
                     </Modal.Footer>
                 </Modal.Body>
             </Modal>
 
             {/* Modal (Alert Window To Reset a Password) */}
-            <Modal show={updatePasswordModal} onHide={() => setUpdatePasswordModal(false)}  class="reset-password-modal" style={{color: "white"}}>
+            <Modal show={updatePasswordModal} onHide={() => setUpdatePasswordModal(false)} className="account-info-modal">
                 <Modal.Header closeButton>
                     <Modal.Title>Update Password</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="modal-content">
                     <Form.Label>Old Password:</Form.Label>
                     <Form.Control type="password" placeholder="newPassword123" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
                     <br/>
@@ -212,8 +213,8 @@ export default function AccountDetails(){
                     <br />
                     <p>Passwords must contain at least 8 characters, 1 number, and 1 special character (#,$^,?,etc.)</p>
                     <Modal.Footer>
-                        <Button onClick={() => setUpdatePasswordModal(false)}>Cancel</Button>
-                        <Button variant="danger" onClick={handleResetPassword}>Yes</Button>
+                        <Button variant="outline-primary" onClick={() => setUpdatePasswordModal(false)}>Cancel</Button>
+                        <Button variant="outline-danger" onClick={handleResetPassword}>Yes</Button>
                     </Modal.Footer>
                 </Modal.Body>
 

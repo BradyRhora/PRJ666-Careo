@@ -2,12 +2,14 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
 
 import { atom, useAtom, useAtomValue } from "jotai";
-import { orderInfoAtom, userAtom } from "@/store";
+import { orderInfoAtom, userAtom, cartItemsAtom } from "@/store";
 import { use, useEffect } from "react";
 
 import { Order } from "@/lib/models/order";
 import { Address } from "@/lib/models/address";
 import { get } from "mongoose";
+
+import { formatPrice } from "@/lib/utils";
 
 const paymentAtom = atom("creditCard");
 const billingAddressAtom = atom(true);
@@ -15,6 +17,7 @@ const billingAddressAtom = atom(true);
 export default function PlaceOrder() {
     const orderInfo = useAtomValue(orderInfoAtom);
     const user = useAtomValue(userAtom);
+    const [cartItems, setCartItems] = useAtom(cartItemsAtom);
 
     const [billingAddressSame, setBillingAddressSame] = useAtom(billingAddressAtom);
     const [paymentMethod, setPaymentMethod] = useAtom(paymentAtom);
@@ -41,11 +44,19 @@ export default function PlaceOrder() {
     }
 
     function getCartItems() {
-        fetch("/api/user/cart?userId=" + user._id)
+        return fetch("/api/cart/getcart?userId=" + user._id)
         .then(res => res.json())
         .then(data => {
-            return data.products;
+            return data.items;
         });
+    }
+
+    function getSubtotal() {
+        let subtotal = 0;
+        for (let i = 0; i < cartItems.length; i++) {
+            subtotal += cartItems[i].productId.price * cartItems[i].quantity;
+        }
+        return subtotal;
     }
 
     function submit(e) {
@@ -101,27 +112,33 @@ export default function PlaceOrder() {
             let shippingAddress = new Address(shipping);
             let billingAddress = new Address(billing);
 
-            let items = getCartItems();
-            let total = 0;
-
-            for (let i = 0; i < items.length; i++) {
-                total += items[i].price * items[i].quantity;
-            }
-
-            let order = new Order({
-                user_id: user._id,
-                product_ids: items,
-                address: shippingAddress,
-                billing_address: billingAddress,
-                payment_method: paymentMethod,
-                total: total
+            fetch("/api/order/placeorder", { 
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: user._id,
+                    shipping_address: shippingAddress,
+                    billing_address: billingAddress,
+                    payment_method: paymentMethod
+                })
+            }).then(res => res.json()).then(data => {
+                if (data.status === 'processing') {
+                    router.push(`/order-confirmation?orderId=${data._id}`);
+                    setCartItems([]);
+                    fetch("/api/cart/emptycart?userId=" + user._id);
+                } else {
+                    alert("Error placing order: " + data.message);
+                }
             });
-
-            debugger;
-
-
         }
     }
+    
+    let subtotal = getSubtotal();
+    let shipping = 4.99;
+    let tax = (subtotal + shipping) * 0.13;
+    let total = subtotal + shipping + tax;
 
     // TODO: maybe replace 'Credit Card' and 'PayPal' with icons
     return(
@@ -179,7 +196,7 @@ export default function PlaceOrder() {
 						<Form.Label>Apartment, Suite, etc. (optional) </Form.Label>
 						<Form.Control type="text" placeholder="Apt. 123"></Form.Control>
 					</Form.Group>
-				</Row>
+				</Row>				
 				<Row className="mb-3">
 					<Form.Group as={Col}>
 						<Form.Label>City</Form.Label>
@@ -188,16 +205,16 @@ export default function PlaceOrder() {
 					<Form.Group as={Col}>
 						<Form.Label>Province</Form.Label>
 						<Form.Select>
-							<option value="1">AB</option>
-							<option value="2">BC</option>
-							<option value="3">MB</option>
-							<option value="4">NB</option>
-							<option value="5">NL</option>
-							<option value="6">NS</option>
-							<option value="7">ON</option>
-							<option value="8">PE</option>
-							<option value="9">QC</option>
-							<option value="10">SK</option>
+							<option value="AB">AB</option>
+							<option value="BC">BC</option>
+							<option value="MB">MB</option>
+							<option value="NB">NB</option>
+							<option value="NL">NL</option>
+							<option value="NS">NS</option>
+							<option value="ON">ON</option>
+							<option value="PE">PE</option>
+							<option value="QC">QC</option>
+							<option value="SK">SK</option>
 						</Form.Select>
 					</Form.Group>
 				</Row>
@@ -205,7 +222,7 @@ export default function PlaceOrder() {
 					<Form.Group as={Col}>
 						<Form.Label>Country</Form.Label>
 						<Form.Select>
-							<option value="1">Canada</option>
+							<option value="Canada">Canada</option>
 						</Form.Select>
 					</Form.Group>
 				</Row>
@@ -233,7 +250,6 @@ export default function PlaceOrder() {
 					</Form.Group>
 				</Row>
                 </>}
-
                 {paymentMethod === "paypal" && <>
                 <Row className="mb-3">
                     <h4 style={{border:'2px solid red', borderRadius: '5px',textAlign:'center', padding:'20px'}}>PayPal payment not yet integrated</h4>
@@ -242,14 +258,25 @@ export default function PlaceOrder() {
 
                 <Row>
                     <div id="order-summary">
-
+                        {cartItems.map((item, index) => {
+                            return (
+                                <div key={index}>
+                                    <div><b>{item.productId?.name}</b> x {item.quantity}</div> <span>{formatPrice(item.productId?.price * item.quantity)}</span>
+                                </div>
+                            );
+                        })}
+                        <div style={{marginBottom:'20px'}}className="divider"></div>
+                        <div><b>Subtotal</b> <span>{formatPrice(subtotal)}</span></div>
+                        <div><b>Shipping</b> <span>{formatPrice(shipping)}</span></div>
+                        <div><b>Tax</b> <span>{formatPrice(tax)}</span></div>
+                        <div><b style={{marginTop:'10px'}}>Total</b> <span><b style={{fontSize:'1.5em'}}>{formatPrice(total)}</b></span></div>
                     </div>
                 </Row>
 
 
 				<Row className="mb-3">
-					<Col>
-						<Button variant="primary" type="Submit">Place Order</Button>
+					<Col className="centered">
+						<Button style={{width:'250px', height:'75px', fontSize:'1.5em'}} onClick={submit} variant="primary" type="Submit">Place Order</Button>
 					</Col>				
 				</Row>
 			</Form>

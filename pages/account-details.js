@@ -6,6 +6,7 @@ import { useState } from "react";
 import { deleteUser, logoutUser, updatePasswordForLoggedInUser } from "@/lib/authenticate";
 import { useRouter } from "next/router";
 import bcrypt from 'bcryptjs';
+import Link from 'next/link'
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/store";
 
@@ -152,11 +153,12 @@ export default function AccountDetails(){
 
         <main className={`${inter.className}`}>
             <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Your Care Profile</h1>
+                <h1>Account</h1>
                 <br />
                 <TabNavigation/>
             </div>
             <div className='centered' style={{paddingTop: '50px'}}>
+                <Link href="/orders"><Button>View Orders</Button></Link>
                 <Form id="account-info-form">
                     <Form.Group>
                         <Form.Label>Email:</Form.Label>

@@ -8,6 +8,7 @@ import { addSavedLists } from "@/lib/addSavedList";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { userAtom, cartItemsAtom } from "@/store";
+import { formatPrice } from "@/lib/utils";
 
 export default function Recommendation(){
     const router = useRouter();

@@ -5,7 +5,7 @@ import connectDB from '@/lib/middleware/mongodb';
 const handler = createRouter();
 handler.use(connectDB)
 
-// POST /api/user/cart/addtocart?userId=123&productId=456&quantity=1
+// POST /api/cart/addtocart?userId=123&productId=456&quantity=1
 handler.post(async (req, res) => {
     const { userId, productId, quantity } = req.body;
     const cart = await addToUserCart(userId, productId, quantity);

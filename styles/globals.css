@@ -3,7 +3,7 @@
     --header-bg: var(--main-bg);
     --font-color: #000000;
     /*--primary-color: #EB6D8B;*/
-    --secondary-color: #f0d7dd;
+    --secondary-color: white;
     --tertiary-color: #AC9789;
     
     /*--hyperlink-color: #e91042;*/
@@ -23,21 +23,31 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--font-color) !important;
 }
 
+.btn-light{
+    background-color: white;
+    color: black;
+    border: 0.5px solid black
+}
+
 .btn-primary {
     background-color: var(--primary-color) !important;
     color: white !important;
-    border-radius: 30px;
 }
 
 .btn-checkout{
     background: var(--primary-color);
     padding: 18px 30px 18px 30px;  
-    border-radius: 30px;
 }
 
 .btn-secondary {
     background-color: var(--secondary-color) !important;
     color: black !important;
+}
+.btn-danger {
+    border: 0.5px solid black;
+}
+.btn{
+    border-radius: 30px;
 }
 
 .inline-flex {
@@ -68,6 +78,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    margin: 1rem 0 1rem 0;
 }
 
 .button-menu > button {
@@ -94,7 +105,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero-text{
     text-align: center;
-    margin-top:20px;
+    margin-top: 5rem;
 }
 
 .loading {
@@ -136,6 +147,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 400px;
     overflow-y: auto;
     border-radius: 5px;
+
 }
 
 .rec-selected {
@@ -187,7 +199,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
-#rec-table tr:hover {
+
+#rec-table td:hover {
     background-color: var(--highlight-color);
 }
 
@@ -270,10 +283,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /********** Orders **********/
 
-#place-order-form {
-    width: 85%;
-}
-
 #billing-address-box {
     border: 1px solid black;
     padding: 20px;
@@ -340,6 +349,23 @@ h1, h2, h3, h4, h5, h6 {
 
 /*************************/
 
+/**** Account Details ****/
+#account-info-form {
+    width: 85%;
+}
+
+.delete-modal .modal-content {
+    background-color: var(--primary-color);
+    color: black;
+  }
+
+.reset-password-modal .modal-content{
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/*************************/
+
 @media (max-width: 768px) {
     .profile-input-section {
         width: 100%;
@@ -351,11 +377,6 @@ h1, h2, h3, h4, h5, h6 {
 
     .profile-input-group {
         width:100%;
-    }
-
-    .delete-modal .modal-content {
-      background-color: #EE7C7C;
-      color: white;
     }
 
     #recommendation-box {
@@ -374,6 +395,11 @@ h1, h2, h3, h4, h5, h6 {
     #payment-info-form {
         width: 95%;
     }
+
+    #landingTitle{
+        font-size: 24px;
+    }
+
 }
 
 @keyframes slideInFromLeft {

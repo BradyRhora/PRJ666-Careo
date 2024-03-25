@@ -31,7 +31,7 @@ export default function EmailVerification(){
         <>
             <div style={{textAlign: "center"}} id="hero-text">
                 <h1>Email Verification</h1>
-                <Button onClick={handleSubmit}>Click here to verify your email</Button>
+                <Button style={{margin:"1rem"}}onClick={handleSubmit}>Click here to verify your email</Button>
 
                 {verificationStatus === 'success' && (
                     <p>

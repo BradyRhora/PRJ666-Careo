@@ -1,9 +1,12 @@
-import { Button } from "react-bootstrap"
+import { Button, Card, Modal } from "react-bootstrap"
 import { useRouter } from "next/router";
 import { atom, useAtom, useAtomValue } from "jotai";
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { addSavedLists } from "@/lib/addSavedList";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { userAtom, cartItemsAtom } from "@/store";
 import { formatPrice } from "@/lib/utils";
 
@@ -27,6 +30,69 @@ export default function Recommendation(){
 
     function selectRec(e){
         setSelectedProduct(recs[e.currentTarget.rowIndex]);
+    }
+
+    const saveCurrList = async () => {
+        if(recs && recs[0]) {
+            addSavedLists(recs);       
+
+            confirmAlert({
+                title: 'Current recommendation list saved!',
+                buttons: [
+                    {
+                        label: 'Ok',
+                    },
+                ]
+            });
+        }
+    }
+
+    const loadSavedList = () => {      
+        let viewList = fetch("/api/recommendations/getsavedlist").then(res => res.json()).then(data => {
+            if(data.savedLists != undefined){
+                if(data.savedLists.length > 0) {
+                    const reccLists = [];
+                    for (let i = 0; i < data.savedLists.length; i++){
+                        reccLists.push("Saved list " + (i + 1));
+
+                    }
+
+                    confirmAlert({
+                        customUI: ({ onClose }) => {
+                            return (
+                                <div className='custom-ui'>
+                                    <h4>Please select a saved list to load:</h4>
+                                    <table id="rec-table">
+                                        <tbody>
+                                            {reccLists.map((rec, i) => (
+                                                <tr onClick={() => {setRecs(data.savedLists[i].savedRecc); onClose();}} key={i}>
+                                                    <td><p>Saved list {i + 1}</p></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            );
+                        }
+                    });
+                }
+            }
+            else{
+                confirmAlert({
+                    title: 'No saved list found!',
+                    message: 'Please save recommendation list to load them.',
+                    buttons: [
+                        {
+                            label: 'Ok',
+                        },
+                    ]
+                });
+            }
+        });
+    }
+
+    function formatPrice(price){
+        return Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price);
     }
 
     function addSelectedProductToCart(){
@@ -58,9 +124,7 @@ export default function Recommendation(){
     /* TODO: The selected product box (rec-selected-box) still needs a section for ingredients and will have to be modified when the actual recommendation system is implemented */
     return (
         <>
-            <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Recommendations</h1><br/>
-            </div>
+            <h1 style={{textAlign:"center"}} id="hero-text">Recommendations</h1><br/>
             <div>
                 <div className='centered' style={{flexDirection:"column"}}>
                     <p>Product recommendations are based on Care Profile conditions</p>                    
@@ -84,11 +148,9 @@ export default function Recommendation(){
                     </div>
                     <br/>
                     <div className="button-menu">
-                        <Button variant="primary" className="centered">Save List</Button>
-                        <Button variant="secondary" className="centered">Load List</Button>
+                        <Button variant="primary" className="centered" onClick={saveCurrList}>Save List</Button>
+                        <Button variant="secondary" className="centered" onClick={loadSavedList}>Load List</Button>
                     </div>
-                    <br/>
-
                     <div id="rec-selected-box">
                         { selectedProduct && selectedProduct.name ?
                             <Row>
@@ -104,10 +166,8 @@ export default function Recommendation(){
                                     </Row>
                                 </Col>
                             </Row> : <p>Nothing selected.</p>}
-                    </div>
-                    <br/>                    
-                    <Button id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
-                    <br/>
+                    </div>          
+                    <Button style={{marginTop:'1rem'}}id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
                 </div>
             </div>
         </>

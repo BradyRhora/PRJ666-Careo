@@ -27,20 +27,9 @@ export default function SignUp(){
 
     
 
-    //Opens tab to terms and conditions page. For now gives 404 error since there is no terms and conditions page yet.
-    function onTermsClick(event){
-        console.log('Terms and conditions link clicked');
-
-    }
 
     const termsLabel = (
-        <span> I agree to the &nbsp;
-            <a href="/terms-and-conditions"
-                target="_blank"
-                onClick={onTermsClick}
-            >Terms and Conditions</a>
-
-        </span>
+        <span> I agree to the&nbsp;<a href="/terms-and-conditions"target="_blank" style={{color:'green'}}>Terms and Conditions</a></span>
     );
 
     const handleSubmit = async (e) => {
@@ -85,24 +74,24 @@ export default function SignUp(){
     return (
         <div>
             <div id="hero-text">
-                <h1>Sign Up</h1>
+                <h3 style={{fontFamily:"sans-serif"}}>Sign Up</h3>
             </div>
             <div className='centered'>
                 <Form id="login-form" onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" value={user} id="email" name="email" onChange={(e)=>setUser(e.target.value)} placeholder="Enter valid email"/>
+                        <Form.Control style={{border:'0.5px solid black'}} type="email" value={user} id="email" name="email" onChange={(e)=>setUser(e.target.value)} placeholder="Enter valid email"/>
                     </Form.Group>
                     <br />
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" value={password} id="password" name="password" onChange={(e)=>setPassword(e.target.value)} placeholder="Enter valid password" />
-                        <Form.Label style={{fontSize: '13px'}}>Password must have a length of at least 8 characters, with 1 number, and 1 special character (#,$^,?,etc.)</Form.Label>
+                        <Form.Control style={{border:'0.5px solid black', marginBottom:'10px'}} type="password" value={password} id="password" name="password" onChange={(e)=>setPassword(e.target.value)} placeholder="Enter valid password" />
+                        <Form.Label>Password must have a length of at least 8 characters, with 1 number, and 1 special character (#,$^,?,etc.)</Form.Label>
                     </Form.Group>
                     <br />
                     <Form.Group>
                         <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control type="password" value={checkPassword} id="checkPassword" name="checkPassword" onChange={(e)=>setCheckPassword(e.target.value)} placeholder="Enter the password again" />
+                        <Form.Control style={{border:'0.5px solid black'}}  type="password" value={checkPassword} id="checkPassword" name="checkPassword" onChange={(e)=>setCheckPassword(e.target.value)} placeholder="Enter the password again" />
                     </Form.Group>
                     {warning && <><br/><Alert variant='danger'>{warning}</Alert></>}
                     <br />

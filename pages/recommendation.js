@@ -1,18 +1,21 @@
 import { Button, Card, Modal } from "react-bootstrap"
 import { useRouter } from "next/router";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { addSavedLists } from "@/lib/addSavedList";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { userAtom, cartItemsAtom } from "@/store";
 
 export default function Recommendation(){
-    const router = useRouter();  
+    const router = useRouter();
+    const user = useAtomValue(userAtom);
     const [recs, setRecs] = useState();
-    const [selectedProduct, setSelectedProduct] = useState({});    
-
+    const [selectedProduct, setSelectedProduct] = useState({});
+    const [cartItems, setCartItems] = useAtom(cartItemsAtom);
+    
     useEffect(() => {
         if (!recs) {
             fetch("/api/recommendations/getrecommendations").then(res => res.json()).then(data => {
@@ -25,11 +28,6 @@ export default function Recommendation(){
     }, [recs]);
 
     function selectRec(e){
-        let rows = document.querySelectorAll("#rec-table tr");
-        rows.forEach(row => {
-            row.classList.remove("rec-selected");
-        });
-        e.currentTarget.classList.add("rec-selected");
         setSelectedProduct(recs[e.currentTarget.rowIndex]);
     }
 
@@ -89,6 +87,34 @@ export default function Recommendation(){
                     ]
                 });
             }
+
+    function formatPrice(price){
+        return Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price);
+    }
+
+    function addSelectedProductToCart(){
+        if (selectedProduct?._id == null) return;
+
+        fetch("/api/cart/addtocart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: user._id,
+                productId: selectedProduct._id,
+                quantity: 1
+            })
+        }).then(res => res.json()).then(data => {
+            setCartItems(data.items);
+            let button = document.getElementById("add-to-cart-button")
+            button.innerText = "✔";
+            button.style.backgroundColor = "green"; // why is this not working
+
+            setTimeout(() => {
+                button.innerText = "Add to Cart";
+                button.style.backgroundColor = "";
+            }, 1000);
         });
     }
 
@@ -107,13 +133,17 @@ export default function Recommendation(){
                         <table id="rec-table">
                             <tbody>
                                 {recs.map((rec, i) => (
-                                    <tr onClick={selectRec} key={i} className={(i == 0) ? "rec-selected" : null}>
-                                        <td><p>{rec.name}</p><p>${rec.price}</p></td>
+                                    <tr onClick={selectRec} key={i} className={(rec._id == selectedProduct._id) ? "rec-selected" : null}>
+                                        <td><p>{rec.name}</p><p>{formatPrice(rec.price)}</p></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table> :
-                        <p>Loading...</p>}
+                        <div className="loading">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>}
                     </div>
                     <br/>
                     <div className="button-menu">
@@ -124,24 +154,23 @@ export default function Recommendation(){
                     <div>
                     </div>
                     <div id="rec-selected-box">
-                        { (selectedProduct && selectedProduct.length > 0) ?
+                        { selectedProduct && selectedProduct.name ?
                             <Row>
                                 <Col>
                                     <Row>
-                                        <Image width={100} height={100} src={selectedProduct.image} alt="product image" />
+                                        <Image width={128} height={128} src={selectedProduct.image} alt="product image" />
                                     </Row>
                                 </Col>
                                 <Col>
                                     <Row style={{flexWrap:"wrap"}}>
                                         <h5>{selectedProduct.name}</h5>
-                                        <p>${selectedProduct.price}</p>
+                                        <p>{formatPrice(selectedProduct.price)}</p>
                                     </Row>
                                 </Col>
-                            </Row> : <p>Loading...</p>}
+                            </Row> : <p>Nothing selected.</p>}
                     </div>
-                    <br/>
-                    
-                    <Button variant="primary" className="centered" type="submit">Add to Cart</Button>
+                    <br/>                    
+                    <Button id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>
                     <br/>
                 </div>
             </div>

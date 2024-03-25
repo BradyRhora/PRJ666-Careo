@@ -6,6 +6,7 @@ import { useState } from "react";
 import { deleteUser, logoutUser } from "@/lib/authenticate";
 import { useRouter } from "next/router";
 import bcrypt from 'bcryptjs';
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -59,13 +60,15 @@ export default function AccountDetails(){
 
         <main className={`${inter.className}`}>
             <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Your Care Profile</h1>
+                <h1>Account</h1>
                 <br />
                 <TabNavigation/>
             </div>
             <br />
             <Container fluid style={{marginBottom: "5em"}}>
-                <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection:"column"}}>
+                    <Link href="/orders"><Button>View Orders</Button></Link>
+                    <br/>
                     <Button variant="outline-danger" onClick={() => setShowModal(true)}>Delete Your Account</Button>
                 </div>
             </Container>

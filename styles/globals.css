@@ -320,6 +320,17 @@ h1, h2, h3, h4, h5, h6 {
     margin:0px;
 }
 
+/********** Order History **********/
+
+.order-box {
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--secondary-color);
+
+}
+
 /*************************/
 
 @media (max-width: 768px) {

@@ -175,7 +175,7 @@ export default function AccountDetails(){
             </Container>
 
             {/* Modal (Alert Window For Delete Account) */}
-            <Modal show={deleteAccountModal} onHide={() => setDeleteAccountModal(false)}>
+            <Modal className="delete-modal" show={deleteAccountModal} onHide={() => setDeleteAccountModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Account</Modal.Title>
                 </Modal.Header>
@@ -186,14 +186,14 @@ export default function AccountDetails(){
                     <br/>
                     <Form.Control type="password" placeholder="Enter your password." value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} />
                     <Modal.Footer>
-                        <Button onClick={() => setDeleteAccountModal(false)}>No</Button>
+                        <Button variant="light" onClick={() => setDeleteAccountModal(false)}>No</Button>
                         <Button variant="danger" onClick={handleDeleteUser}>Yes</Button>
                     </Modal.Footer>
                 </Modal.Body>
             </Modal>
 
             {/* Modal (Alert Window To Reset a Password) */}
-            <Modal show={updatePasswordModal} onHide={() => setUpdatePasswordModal(false)}  class="reset-password-modal" style={{color: "white"}}>
+            <Modal show={updatePasswordModal} onHide={() => setUpdatePasswordModal(false)}  className="reset-password-modal">
                 <Modal.Header closeButton>
                     <Modal.Title>Update Password</Modal.Title>
                 </Modal.Header>
@@ -209,7 +209,7 @@ export default function AccountDetails(){
                     <br />
                     <p>Passwords must contain at least 8 characters, 1 number, and 1 special character (#,$^,?,etc.)</p>
                     <Modal.Footer>
-                        <Button onClick={() => setUpdatePasswordModal(false)}>Cancel</Button>
+                        <Button variant="light" onClick={() => setUpdatePasswordModal(false)}>Cancel</Button>
                         <Button variant="danger" onClick={handleResetPassword}>Yes</Button>
                     </Modal.Footer>
                 </Modal.Body>

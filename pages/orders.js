@@ -11,6 +11,7 @@ const OrdersPage = () => {
     // TODO: Fetch only a specified number of orders, and either fetch more as user scrolls or separate into pages
     // get orders from /api/order/getuserorders?userId=#
     useEffect(() => {
+        console.log(user._id);
         const userId = user._id;
         fetch(`/api/order/getuserorders?userId=${userId}`)
         .then((res) => res.json())
@@ -19,6 +20,8 @@ const OrdersPage = () => {
             if (data.status && data.status != 200) return;
             data = data.sort((a, b) => new Date(b.order_date) - new Date(a.order_date));
             data.forEach((order) => {
+                order.shipping_address = order.shipping_address.address + ", " + order.shipping_address.city + ", " + order.shipping_address.province + " " + order.shipping_address.postal_code;
+                order.billing_address = order.billing_address.address + ", " + order.billing_address.city + ", " + order.billing_address.province + " " + order.billing_address.postal_code;
                 order.order_date = new Date(order.order_date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
                 order.status = order.status.charAt(0).toUpperCase() + order.status.slice(1);
                 if (order.payment_method === 'creditCard') order.payment_method = 'Credit Card';

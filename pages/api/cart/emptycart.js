@@ -7,7 +7,7 @@ handler.use(connectDB)
 
 
 handler.post(async (req, res) => {
-    const cart = await removeFromUserCart(req.body.userId);
+    const cart = await emptyUserCart(req.query.userId);
     res.status(200).json(cart);
 });
 

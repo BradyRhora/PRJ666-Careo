@@ -14,6 +14,10 @@ import { getUserData } from "@/lib/userData";
 import profile_icon from "../public/assets/profile_icon.png";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/store";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { setProfileData } from "@/lib/userData";
+import { useRouter } from "next/router"; 
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +25,7 @@ export default function UserProfile() {
   const userData = useAtomValue(userAtom);
   const [selectedConditions, setSelectedConditions] = useState([]);
   const [selectedCriteria, setSelectedCriteria] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     const getConditions = async () => {
@@ -63,6 +68,110 @@ export default function UserProfile() {
     );
   }*/
 
+  const viewSavedList = () => {
+    let viewList = fetch("/api/recommendations/getsavedlist").then(res => res.json()).then(data => {
+        if(data.savedLists != undefined){
+            if(data.savedLists.length > 0) {
+                const reccLists = [];
+                for (let i = 0; i < data.savedLists.length; i++){
+                    reccLists.push("Saved list " + (i + 1));
+
+                }
+
+                confirmAlert({
+                    customUI: ({ onClose }) => {
+                        return (
+                            <div className='custom-ui'>
+                                <h4>Current saved recommendation lists:</h4>
+                                <table id="rec-table">
+                                    <tbody>
+                                        {reccLists.map((rec, i) => (
+                                            <tr onClick={() => {}} key={i}>
+                                                <td><p>Saved list {i + 1}</p></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <button onClick={onClose}>Done</button>
+                            </div>
+                        );
+                    }
+                });
+            }
+        }
+        else{
+            confirmAlert({
+                title: 'No saved list found!',
+                message: 'Please save recommendation list to view them.',
+                buttons: [
+                    {
+                        label: 'Ok',
+                    },
+                ]
+            });
+        }
+    });
+  }
+
+  const newProfile = () => {
+    confirmAlert({
+      title: 'Continue to new profile creation?',
+      message: 'Current conditions and criteria will be deleted.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            let p = {};
+            p.conditions = [];
+            setProfileData(p);
+
+            router.push('/create-profile');
+
+          }
+        },
+        {
+          label: 'No'
+        }
+      ]
+    });
+  }
+
+  const clearList = () => {
+    let checkLists = fetch("/api/recommendations/getsavedlist").then(res => res.json()).then(data => {
+      if(data.savedLists != undefined){
+        if(data.savedLists.length > 0) {
+          confirmAlert({
+            title: 'Clear all saved list?',
+            message: 'All saved recommended list will be deleted.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                  fetch("/api/recommendations/delsavedlist");
+
+                }
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
+        }
+      }
+      else{
+          confirmAlert({
+            title: 'No saved list available?',
+            message: 'Currently there are no saved recommendation list.',
+            buttons: [
+              {
+                label: 'Ok',
+              },
+            ]
+          });
+      }
+    });
+  }
+
   return (
     <>
       <Head>
@@ -96,9 +205,11 @@ export default function UserProfile() {
           </Row>
           <br /><br />
           <Row className="mx-auto" style={{maxWidth: "25em"}}>
-            <Button onClick={()=>{alert("Coming soon")}}>View Saved Lists</Button>
+            <Button onClick={viewSavedList}>View Saved Lists</Button>
             <hr></hr>
-            <Button onClick={()=>{alert("Coming soon")}}>Update User Conditions</Button>
+            <Button onClick={clearList}>Clear Saved Lists</Button>
+            <hr></hr>
+            <Button onClick={newProfile}>Create New Profile</Button>
           </Row>
         </Container>
       </main>

@@ -20,7 +20,7 @@ export default function ShoppingCart(){
             console.log(data);
             setCartItems(data.items);
         });
-    }, [user]);
+    }, [user, setCartItems]);
 
     const handleCheckout = async (e) => {
         e.preventDefault();

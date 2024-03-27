@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-export default function Recommendation(){
+export default function Compatibility(){
     const [allproducts, setAllProducts] = useState();
 	const [searchItem, setSearchItem] = useState();
 	const [filteredProducts, setFilteredProducts] = useState();

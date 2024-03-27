@@ -158,7 +158,6 @@ export default function AccountDetails(){
                 <TabNavigation/>
             </div>
             <div className='centered' style={{paddingTop: '50px'}}>
-                <Link href="/orders"><Button>View Orders</Button></Link>
                 <Form id="account-info-form">
                     <Form.Group>
                         <Form.Label>Email:</Form.Label>
@@ -172,7 +171,8 @@ export default function AccountDetails(){
             <Container fluid style={{marginBottom: "5em"}}>
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                     <Button style={{marginRight: "10px"}} type="button" class="btn btn-warning" onClick={() => setUpdatePasswordModal(true)} >Update Your Password</Button>
-                    <Button type="button" class="btn btn-danger" onClick={() => setDeleteAccountModal(true)} >Delete Your Account</Button>
+                    <Button style={{marginRight: "10px"}} type="button" class="btn btn-danger" onClick={() => setDeleteAccountModal(true)} >Delete Your Account</Button>
+                    <Link href="/orders"><Button variant="light">View Orders</Button></Link>
                 </div>
             </Container>
 

@@ -36,7 +36,7 @@ export default function ShoppingCart(){
             <div>
                 <div id="cart-items" className='centered' style={{paddingTop: '50px', paddingLeft: '30px'}}>
                     {cartItems?.length > 0 ?
-                        <Row className="gy-4">
+                        <Row className="gy-4" style={{width:'100%'}}>
                             {cartItems.map((item, i) => (
                                 <Col lg={3} key={i}><ProductCard cartItem={item} /></Col>
                             ))}

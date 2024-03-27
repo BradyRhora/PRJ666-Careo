@@ -364,6 +364,28 @@ h1, h2, h3, h4, h5, h6 {
     color: white;
 }
 
+/*
+* Smartphones
+*/
+@media (max-width: 700px){ 
+    #account-info-form {
+        width: 70%;
+    }
+    .delete-modal .modal-content {
+        background-color: var(--primary-color);
+        color: black;
+      }
+    
+    .reset-password-modal .modal-content{
+        background-color: var(--primary-color);
+        color: white;
+    }
+    .btn{
+        padding: 0.5rem;
+    }
+    
+}
+
 /*************************/
 
 @media (max-width: 768px) {

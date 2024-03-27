@@ -153,11 +153,10 @@ export default function AccountDetails(){
 
         <main className={`${inter.className}`}>
             <div style={{textAlign:"center"}} id="hero-text">
-                <h1>Account</h1>
-                <br />
+                <h3>Account</h3>
                 <TabNavigation/>
             </div>
-            <div className='centered' style={{paddingTop: '50px'}}>
+            <div className='centered' style={{paddingTop: '20px'}}>
                 <Form id="account-info-form">
                     <Form.Group>
                         <Form.Label>Email:</Form.Label>

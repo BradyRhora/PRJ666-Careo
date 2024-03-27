@@ -154,17 +154,37 @@ export default function Recommendation(){
                     <div id="rec-selected-box">
                         { selectedProduct && selectedProduct.name ?
                             <Row>
-                                <Col>
-                                    <Row>
-                                        <Image width={128} height={128} src={selectedProduct.image} alt="product image" />
-                                    </Row>
-                                </Col>
-                                <Col>
-                                    <Row style={{flexWrap:"wrap"}}>
-                                        <h5>{selectedProduct.name}</h5>
-                                        <p>{formatPrice(selectedProduct.price)}</p>
-                                    </Row>
-                                </Col>
+                                <Row>
+                                    <Col>
+                                        <Row>
+                                            <Image width={128} height={128} src={selectedProduct.image} alt="product image" />
+                                        </Row>
+                                    </Col>
+                                    <Col>
+                                        <Row style={{flexWrap:"wrap"}}>
+                                            <h5>{selectedProduct.name}</h5>
+                                            <p>{formatPrice(selectedProduct.price)}</p>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                                
+                                <Row>
+                                    <h6><b>Product Info</b></h6>             
+                                    <div id="rec-selected-info">
+                                        <span>
+                                            <b>Brand:</b> {selectedProduct.brand}
+                                        </span>                                            
+                                        <span>
+                                            <b>Category:</b> {selectedProduct.type}
+                                        </span>
+                                        <span>
+                                            <b>Vegan:</b> {selectedProduct.is_vegan ? "✔" : "✘"}
+                                        </span>
+                                        <span>
+                                            <b>Cruelty Free:</b> {selectedProduct.is_cruelty_free ? "✔" : "✘"}
+                                        </span>
+                                    </div>
+                                </Row>
                             </Row> : <p>Nothing selected.</p>}
                     </div>          
                     <Button style={{marginTop:'1rem'}}id="add-to-cart-button" variant="primary" onClick={addSelectedProductToCart} className="centered" type="submit">Add to Cart</Button>

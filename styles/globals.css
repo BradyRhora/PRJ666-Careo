@@ -168,9 +168,23 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap:nowrap;
 }
 
+#rec-selected-box > div {
+    margin:0px !important;
+}
+
 #rec-selected-box img {
     width: unset;
     margin:auto;
+}
+
+#rec-selected-info {
+    display:flex;
+    flex-direction: column;    
+    width:100%;
+}
+
+#rec-selected-info > * {
+    margin-right: 5px;
 }
 
 #rec-table {

@@ -37,7 +37,7 @@ export default function Recommendation(){
             addSavedLists(recs);       
 
             confirmAlert({
-                title: 'Current recommendation list saved!',
+                title: 'Current Recommendation List Saved!',
                 buttons: [
                     {
                         label: 'Ok',

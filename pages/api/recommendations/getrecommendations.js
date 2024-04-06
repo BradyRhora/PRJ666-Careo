@@ -17,7 +17,7 @@ handler.get(async (req, res) => {
 
         const recs = await recommend(user);
         if (recs) {
-          console.log("Got Recommendations: " + JSON.stringify(recs));
+          //console.log("Got Recommendations: " + JSON.stringify(recs));
           res.status(200).json(recs);
         } else {
           res.status(400).json({status: 400, message: "Unable to get recommendations"});

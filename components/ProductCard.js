@@ -32,11 +32,22 @@ export default function ArtworkCard(prop) {
     // Generates a list of numbers for the dropdown menu with values from 1 - 10 that affects the selected quantity 
     const numberOptions = Array.from({length: 10}, (_, index) => index + 1);
 
-    const handleQuantityChange = (e) => {
-
+    const handleQuantityChange = async (e) => {
         let newQuantity = parseInt(e.target.value);
         setQuantity(newQuantity);
         product.quantity = newQuantity;
+        const res = await fetch("/api/cart/updateproductquantity", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: user._id,
+                productId: product.productId._id,
+                quantity: newQuantity
+            })
+        });
+        //setCart(data);
         console.log("Product quantity = ", newQuantity);
     }
 

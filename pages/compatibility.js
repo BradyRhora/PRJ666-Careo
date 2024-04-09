@@ -1,12 +1,19 @@
-import { getIncompatibilitiesByIngredientId } from "@/lib/models/incompatible";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Image from "next/image";
+
+import cartIcon from "@/public/assets/add_shopping_cart.svg";
+import { userAtom, cartItemsAtom } from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 
 export default function Compatibility(){
   const [allproducts, setAllProducts] = useState();
 	const [searchItem, setSearchItem] = useState();
 	const [filteredProducts, setFilteredProducts] = useState();
 	const [compatibleProducts, setCompatibleProducts] = useState([]);
+	const user = useAtomValue(userAtom);
+	const [cartItems, setCartItems] = useAtom(cartItemsAtom);
 
 	useEffect(() => {
 			if (!allproducts) {
@@ -76,6 +83,31 @@ export default function Compatibility(){
 	
 	}
 
+	// Add a product to cart
+	async function addToCart (productId) {
+		try {
+			const res = await fetch("/api/cart/addtocart", {
+				method: "POST",
+				headers: {
+						"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+						userId: user._id,
+						productId: productId,
+						quantity: 1
+				})
+			});
+	
+			const data = await res.json();
+			setCartItems(data.items);
+
+			// TODO: make the button pretty? Turn green maybe?
+		} catch(e) {
+			console.log(e.message);
+		}
+		
+	}
+
 	return(
 		<>
 			<h2 id="hero-text">Product Compatibility</h2>
@@ -126,7 +158,7 @@ export default function Compatibility(){
 						</tr>	
 						{compatibleProducts.map(p => 
 								<tr key={p._id}>
-									<td>{p.name}</td>
+									<td><div>{p.name + " | $" + p.price}</div><Button id={`${p._id}`} onClick={() => addToCart(p._id)}><Image src={cartIcon} alt="Add to Cart"></Image></Button></td>
 								</tr>
 						)}
 					</tbody>}

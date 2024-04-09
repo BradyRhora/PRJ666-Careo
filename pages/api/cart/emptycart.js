@@ -6,7 +6,7 @@ const handler = createRouter();
 handler.use(connectDB)
 
 
-handler.post(async (req, res) => {
+handler.get(async (req, res) => {
     const cart = await emptyUserCart(req.query.userId);
     res.status(200).json(cart);
 });

@@ -125,9 +125,10 @@ export default function PlaceOrder() {
                 })
             }).then(res => res.json()).then(data => {
                 if (data.status === 'processing') {
-                    router.push(`/order-confirmation?orderId=${data._id}`);
                     setCartItems([]);
                     fetch("/api/cart/emptycart?userId=" + user._id);
+                    router.push(`/order-confirmation?orderId=${data._id}`);
+
                 } else {
                     alert("Error placing order: " + data.message);
                 }

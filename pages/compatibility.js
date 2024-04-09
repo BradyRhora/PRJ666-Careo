@@ -1,20 +1,24 @@
+import { getIncompatibilitiesByIngredientId } from "@/lib/models/incompatible";
 import { useEffect, useState } from "react";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function Compatibility(){
-    const [allproducts, setAllProducts] = useState();
+  const [allproducts, setAllProducts] = useState();
 	const [searchItem, setSearchItem] = useState();
 	const [filteredProducts, setFilteredProducts] = useState();
+	const [compatibleProducts, setCompatibleProducts] = useState([]);
 
-    useEffect(() => {
-        if (!allproducts) {
-            fetch("/api/product/getallproducts").then(res => res.json()).then(data => {
-                setAllProducts(data);
+	useEffect(() => {
+			if (!allproducts) {
+					fetch("/api/product/getallproducts").then(res => res.json()).then(data => {
+							setAllProducts(data);
 
-            });
-        }
+					});
+			}
 
-    }, [allproducts]);
+	}, [allproducts]);
+
+	useEffect(() =>{}, [compatibleProducts]);
 
 	const handleInputChange = (e) => {
 		const searchProduct = e.target.value;
@@ -34,8 +38,36 @@ export default function Compatibility(){
 	}
 
 	//onSearch will hand the request to get compatible products by sending either id or the name, need to decide later
-	const onSearch = (e) => {
+	const onSearch = async (e) => {
+		let product;
+		let compatibleproducts = [];
 
+		// Get the selected product
+		for (let i = 0; i < allproducts.length; i++) {
+			allproducts[i].ingredients = new Set(allproducts[i].ingredients);
+			if (allproducts[i].name.toLowerCase().localeCompare(searchItem.toLowerCase()) === 0) {
+				product = allproducts[i];
+			}
+		}
+
+		try {
+			const res = await fetch(`/api/product/getProductIncompatibilities?productId=${product._id}`);
+			const results = await res.json();
+			product.incompatibilities = new Set(results);
+
+			compatibleproducts = allproducts.filter((prod) => {
+				for (const ingredient of prod.ingredients.keys()) {
+					if (product.incompatibilities.has(ingredient)){
+						return false;
+					}
+				}
+				return true;
+			});
+		} catch (e) {
+			console.error(e.message);
+		}
+
+		setCompatibleProducts(compatibleproducts);
 	}
 
 	const handleProductSelect = (productName) => {
@@ -74,7 +106,7 @@ export default function Compatibility(){
 			</div>
 			<div className="centered">
 				<table id="rec-table" style={{width:"60%", margin:"1rem"}}>
-					<tbody>
+					{compatibleProducts.length === 0 && <tbody>
 						<tr style={{background:'white'}}>
 							<th className="centered">Compatible Products</th>
 						</tr>
@@ -87,7 +119,17 @@ export default function Compatibility(){
 						<tr>
 							<td>Product C</td>
 						</tr>
-					</tbody>
+					</tbody> }
+					{compatibleProducts.length > 0 && <tbody>
+						<tr style={{background:'white'}}>
+							<th className="centered">Compatible Products</th>	
+						</tr>	
+						{compatibleProducts.map(p => 
+								<tr key={p._id}>
+									<td>{p.name}</td>
+								</tr>
+						)}
+					</tbody>}
 				</table>
 			</div>
 

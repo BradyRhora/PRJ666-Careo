@@ -28,7 +28,7 @@ export default function Header() {
                 <Link href="/"><Image width="32" height="32" src="/assets/templogo.png" alt="Careo Logo"></Image></Link>
                 {userData && userData.email ? <span>Welcome, <b>{userData.email.split('@')[0]}</b> <a href='' style={{fontSize: '0.8em'}} onClick={handleLogout}>Logout</a></span> : null}
             </div>
-            {userData.age && userData.email ? <TabNavigation/> : null}
+            {userData.age > 0 && userData.email ? <TabNavigation/> : null}
         </>
     )
 }

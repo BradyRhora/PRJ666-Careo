@@ -121,6 +121,7 @@ export default function UserProfile() {
         {
           label: 'Yes',
           onClick: () => {
+            userData.age = 0;
             let p = {};
             p.conditions = [];
             setProfileData(p);

@@ -8,11 +8,13 @@ import { userAtom, cartItemsAtom } from '@/store';
 
 export default function ArtworkCard(prop) {
     const [product, setProduct] = useState({});
+    const [quantity, setQuantity] = useState(product.quantity)
     const [cart, setCart] = useAtom(cartItemsAtom);
     const user = useAtomValue(userAtom);
 
     useEffect(() => {
         setProduct(prop.cartItem);
+        setQuantity(product.quantity)
     }, [prop.cartItem])
 
     function removeFromCart() {
@@ -26,7 +28,28 @@ export default function ArtworkCard(prop) {
     function formatPrice(price){
         return Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price);
     }
+    
+    // Generates a list of numbers for the dropdown menu with values from 1 - 10 that affects the selected quantity 
+    const numberOptions = Array.from({length: 10}, (_, index) => index + 1);
 
+    const handleQuantityChange = async (e) => {
+        let newQuantity = parseInt(e.target.value);
+        setQuantity(newQuantity);
+        product.quantity = newQuantity;
+        const res = await fetch("/api/cart/updateproductquantity", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: user._id,
+                productId: product.productId._id,
+                quantity: newQuantity
+            })
+        });
+        //setCart(data);
+        console.log("Product quantity = ", newQuantity);
+    }
 
     return (
         <Card style={{ width: 'auto' }}>
@@ -34,8 +57,15 @@ export default function ArtworkCard(prop) {
             <Card.Body>
                 <Card.Title>{product.productId?.name? product.productId?.name : "N/A"}</Card.Title>
                 <Card.Text className='spaced-apart'>
-                    {product.quantity? "Quantity: " + product.quantity : "0 "}<br/>
-                    {product.productId?.price? "Price: " + formatPrice(product.productId?.price) : "$0 "}&nbsp;
+                    Quantity:
+                    <select value={quantity} onChange={handleQuantityChange} style={{height : '25px'}}>
+                        {numberOptions.map((number) => (
+                            <option key={number} value={number}>
+                                {number}
+                            </option>
+                        ))}
+                    </select>
+                    {product.productId?.price? "Price: " + formatPrice(product.productId?.price * quantity) : "$0 "}&nbsp;
                     <Button onClick={removeFromCart} variant="outline-danger"><Image src="/assets/trash.png" rounded alt="Delete icon" /></Button>
                 </Card.Text>
             </Card.Body>

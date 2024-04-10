@@ -12,6 +12,9 @@ export default function ShoppingCart(){
     const user = useAtomValue(userAtom);
     const [cartItems, setCartItems] = useAtom(cartItemsAtom);
     
+    // Get user's data from userAtom
+    const userData = useAtomValue(userAtom);
+
     useEffect(() => {
         if (!user || !user._id) return;
         console.log('getting cart items')
@@ -24,6 +27,17 @@ export default function ShoppingCart(){
 
     const handleCheckout = async (e) => {
         e.preventDefault();
+
+        if (cartItems.length == 0) {
+            alert("You can not place an order until you have an item in your cart.");
+            return;
+        }
+
+        if (!userData.emailVerified) {
+            alert("You cannot place an order until you verify your email. Please look for an email from the sender careoprj666 in your email.");
+            return;
+        }
+        
         router.push('/place-order');
         
     }

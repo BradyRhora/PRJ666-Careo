@@ -1,13 +1,14 @@
-import { emptyUserCart } from "@/lib/models/cart";
+import { setUserCartProductQuantity } from "@/lib/models/cart";
 import { createRouter} from "next-connect";
 import connectDB from '@/lib/middleware/mongodb';
 
 const handler = createRouter();
 handler.use(connectDB)
 
-
-handler.get(async (req, res) => {
-    const cart = await emptyUserCart(req.query.userId);
+// POST /api/cart/updateproductquantity
+handler.post(async (req, res) => {
+    const { userId, productId, quantity } = req.body;
+    const cart = await setUserCartProductQuantity(userId, productId, quantity);
     res.status(200).json(cart);
 });
 

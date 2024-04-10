@@ -39,6 +39,42 @@ export default function PlaceOrder() {
     }
 
     function validateCreditCard(cardNumber, expiryDate, securityCode) {
+        // Remove spaces from card number, and slashes from expiry date
+        cardNumber = cardNumber.replace(' ', '');
+
+        // Check for invalid characters
+        if (parseInt(cardNumber) == NaN || parseInt(securityCode) == NaN || parseInt(expiryDate.replace('/', '')) == NaN) {
+            console.log("not a number");
+            return false;
+        }
+
+        // Check length of expirydate and securitycode
+        if (expiryDate.length !== 5 || securityCode.length < 3 || securityCode.length > 4) {
+            console.log("length wrong");
+            return false;
+        }
+
+        // Split into array of numbers for luhn's algorithm
+        let cardNumberArray = cardNumber.split('').map(number =>  parseInt(number));
+
+        // luhn's algorithm
+
+        // Double every other number, add its digits if it becomes larger than 9
+        for (let i = cardNumberArray.length - 1; i >= 0; i -= 2) {
+            cardNumberArray[i] *= 2;
+            if (cardNumberArray[i] > 9) {
+                cardNumberArray[i] = (cardNumberArray[i] % 10) + 1
+            }
+        }
+
+        // Sum numbers in array, if sum % 10 != 0 the card number is invalid
+        const sum = cardNumberArray.reduce((s, current) => s + current, 0);
+
+        if (sum % 10 !== 0) {
+            console.log("sum wrong");
+            return false;
+        }
+
         // TODO: implement this 
         return true;
     }
@@ -71,10 +107,11 @@ export default function PlaceOrder() {
         if (paymentMethod === "paypal") {
             // TODO: implement PayPal payment
         } else if (paymentMethod === "creditCard") {
+            console.log(form);
             let creditCard = {
-                cardNumber: form[4].value,
-                expiryDate: form[5].value,
-                securityCode: form[6].value
+                cardNumber: form[3].value,
+                expiryDate: form[4].value,
+                securityCode: form[5].value
             };
 
             if (!validateCreditCard(creditCard.cardNumber, creditCard.expiryDate, creditCard.securityCode)) {
@@ -125,9 +162,10 @@ export default function PlaceOrder() {
                 })
             }).then(res => res.json()).then(data => {
                 if (data.status === 'processing') {
-                    router.push(`/order-confirmation?orderId=${data._id}`);
                     setCartItems([]);
                     fetch("/api/cart/emptycart?userId=" + user._id);
+                    router.push(`/order-confirmation?orderId=${data._id}`);
+
                 } else {
                     alert("Error placing order: " + data.message);
                 }
